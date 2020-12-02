@@ -1,5 +1,9 @@
+import { IOctoBot, IOctoOptions } from '../types/ICore';
+import { IOctoEvent } from '../types/IEvent';
+import { IOctoMessage } from '../types/IMessage';
+import { IOctoUser } from '../types/IUser';
+import OctoGroup from './group';
 import configureLog from './logger';
-import { IOctoBot, IOctoEvent, IOctoMessage, IOctoOptions, IOctoUser } from '../types';
 
 export default abstract class OctoBot<RE = unknown, RB = unknown> {
   public ROOT: string;
@@ -23,7 +27,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown> {
 
   protected abstract botAdapter(rawBot: RB): IOctoBot;
 
-  protected async onMessage(rawEvent: RE, ignoreBotMsg?: boolean) {
+  protected onMessage(rawEvent: RE, ignoreBotMsg?: boolean) {
     const event = this.eventAdapter(rawEvent);
     if (event.sender.id === this.asUser.id) {
       return;
@@ -48,8 +52,13 @@ export default abstract class OctoBot<RE = unknown, RB = unknown> {
   public abstract async send(
     evt: IOctoEvent,
     msg: IOctoMessage,
+    atSender?: boolean,
     atList?: IOctoUser[],
   ): Promise<void>;
 
   public abstract async sendToGroup(groupId: string, msg: IOctoMessage, tag: string): Promise<void>;
+
+  public abstract async at(userId: string): Promise<void>;
+
+  public abstract async getGroups(): Promise<OctoGroup[]>;
 }

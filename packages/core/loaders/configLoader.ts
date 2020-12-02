@@ -1,29 +1,20 @@
-import fs from 'fs-extra';
-import Loader from '.';
-import { IOctoBotConfig } from '../types';
+import BaseLoader from './baseLoader';
+import { IOctoBotConfig } from '../types/ICore';
 import { parseFileName } from './utils';
 
-export default class ConfigLoader extends Loader {
+export default class ConfigLoader extends BaseLoader {
   public configMap = new Map<string, IOctoBotConfig>();
 
   public constructor(ROOT: string) {
-    super(ROOT);
-    this.init();
+    super(ROOT, 'config');
   }
 
-  private async init() {
-    const configList = await this.getDir('config');
-    configList.forEach(async (fileName) => {
-      const { name, type, suffix } = parseFileName(fileName);
-      this.logger.debug(`Loading config file: ${fileName}`);
-      if (type !== 'config' || suffix[0] !== 'json') {
-        return;
-      }
-      try {
-        this.configMap.set(name, await fs.readJson(this.getResolvedPath('config', 'name')));
-      } catch {
-        this.logger.error(`caught an error when parsing ${name} config`);
-      }
-    });
+  protected async loadFn(fileName: string) {
+    const { name: configName, suffix, type } = parseFileName(fileName);
+    if (suffix.length > 0 && type !== this.loadPath) {
+      return;
+    }
+    const botConfig = await import(fileName);
+    this.configMap.set(configName, botConfig);
   }
 }
