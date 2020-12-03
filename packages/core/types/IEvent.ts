@@ -7,5 +7,4 @@ export interface IOctoEvent<RE = unknown> {
   id: string;
   message: IOctoMessage;
   groupId?: string;
-  channelId?: string;
 }

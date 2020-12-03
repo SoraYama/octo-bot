@@ -33,7 +33,7 @@ export default class TypeHelper {
     return TypeHelper.getType(target) === 'Boolean';
   }
 
-  public static isArray(target: unknown): target is [] {
+  public static isArray<T = unknown>(target: unknown): target is T[] {
     return TypeHelper.getType(target) === 'Array';
   }
 }

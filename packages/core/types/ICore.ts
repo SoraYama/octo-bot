@@ -1,12 +1,13 @@
+import OctoBot from '../base/bot';
 import { IBlockedUser, IOctoUser } from './IUser';
 
-export interface IOctoOptions<RB = unknown> {
+export interface IOctoOptions {
   ROOT: string;
-  rawBot: RB;
-  botName: string;
+  bots: OctoBot[];
+  env?: string;
 }
 
-export interface IOctoBot extends IOctoUser {
+export interface IOctoBotAsUser extends IOctoUser {
   platform: string;
 }
 

@@ -10,16 +10,21 @@ abstract class OctoEvent implements IOctoEvent {
     public message: IOctoMessage,
     public sender: IOctoUser,
     public groupId?: string,
-    public channelId?: string,
   ) {}
 
   public get params() {
     return this.message.content?.split?.(' ') || [];
   }
 
+  public get remainParams() {
+    return this.params.slice(1);
+  }
+
   public get attachment() {
     return this.message.attachment;
   }
+
+  public abstract get isAtMe(): boolean;
 
   /**
    * 快速回复

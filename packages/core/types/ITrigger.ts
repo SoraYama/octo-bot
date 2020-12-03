@@ -8,4 +8,5 @@ export enum TriggerMethod {
 export interface ITrigger {
   method: TriggerMethod[];
   match: string;
+  onlyToMe?: boolean;
 }

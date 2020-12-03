@@ -10,6 +10,6 @@ export interface IModuleInfo {
   name?: string;
   modulePath?: string;
   // eslint-disable-next-line @typescript-eslint/ban-types
-  clazz?: Function;
+  clazz?: unknown;
   methodMap?: Map<string, IModuleMethodInfo>;
 }
