@@ -1,19 +1,16 @@
 export enum Priv {
-  Blocked = -99,
-  Default = 0,
+  Blocked = 0,
   Normal = 1,
-  Admin = 10,
-  White = 50,
-  SuperAdmin = 99,
+  Admin = 2,
+  White = 3,
+  SuperAdmin = 4,
 }
 
-export interface IOctoUser {
+export interface IOctoUser<RU = unknown> {
   id: string;
   userName: string;
   nickName: string;
-  isAdmin: boolean;
-  privilege: Priv;
-  rawUser: unknown;
+  rawUser: RU;
   isBot?: boolean;
 }
 

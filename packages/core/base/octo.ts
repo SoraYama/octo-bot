@@ -35,7 +35,15 @@ export default class Octo {
     return packageModule.version;
   }
 
+  public static get configMap() {
+    return this.instance().configLoader.configMap;
+  }
+
   private env: string;
+
+  private bots: OctoBot[];
+
+  public configLoader: ConfigLoader;
 
   private constructor(private options: IOctoOptions) {
     const { ROOT, bots, env } = options;
@@ -52,13 +60,12 @@ export default class Octo {
     }
 
     this.env = env || process.env.NODE_ENV || 'development';
+    this.bots = bots;
 
-    this.init();
-  }
-
-  private init() {
-    new ConfigLoader(this.options.ROOT);
+    this.configLoader = new ConfigLoader(this.options.ROOT);
     new ModuleLoader(this.options.ROOT);
     new ServiceLoader(this.options.ROOT);
+
+    this.bots.forEach((bot) => bot.run());
   }
 }

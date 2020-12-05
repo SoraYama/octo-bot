@@ -3,7 +3,7 @@ import BaseModule from '../base/module';
 import ServiceLoader from '../loaders/serviceLoader';
 import TypeHelper from '../utils/typeHelper';
 
-export function Service(service: string | Function): Function {
+export default function Service(service: string | Function): Function {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return function decorate(target: Function, property: string, desc: PropertyDescriptor): any {
     const serviceName = TypeHelper.isString(service) ? service : service.name;

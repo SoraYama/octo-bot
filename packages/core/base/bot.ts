@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { IOctoBotAsUser } from '../types/ICore';
-import { IOctoMessage } from '../types/IMessage';
+import { IOctoMessage, ISendOptions } from '../types/IMessage';
 import { IModuleInfo } from '../types/IModule';
-import { IOctoUser } from '../types/IUser';
 import triggerMethod from '../utils/triggerMethod';
 import TypeHelper from '../utils/typeHelper';
 import OctoEvent from './event';
 import OctoGroup from './group';
 import moduleInfo from './info';
 import configureLog from './logger';
+import OctoUser from './user';
 
-export default abstract class OctoBot<RE = unknown, RB = unknown> {
-  public constructor(public ROOT: string, public rawBot: RB, public botName: string) {}
+export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> {
+  private _userMap = new Map<string, OctoUser<RU>>();
+
+  public constructor(public ROOT: string, public platformName: string) {}
 
   public get logger() {
     return configureLog(this.ROOT).getLogger(this.asUser.platform);
@@ -21,19 +23,26 @@ export default abstract class OctoBot<RE = unknown, RB = unknown> {
     return this.botAdapter(this.rawBot);
   }
 
+  public getUser(id: string, userName?: string, nickName?: string, rawUser?: RU, isBot?: boolean) {
+    const userInMap = this._userMap.get(id);
+    if (!userInMap) {
+      if ([userName, nickName, rawUser].some((i) => TypeHelper.isUndef(i))) {
+        throw new Error('Missing params when construct user');
+      }
+      const user = new OctoUser(id, userName!, nickName!, rawUser!, isBot);
+      this._userMap.set(id, user);
+      return user;
+    }
+    return userInMap;
+  }
+
+  public abstract get rawBot(): RB;
+
   protected abstract eventAdapter(rawEvent: RE): OctoEvent;
 
   protected abstract botAdapter(rawBot: RB): IOctoBotAsUser;
 
-  public abstract async send(
-    msg: IOctoMessage,
-    atSender?: boolean,
-    atList?: IOctoUser[],
-  ): Promise<void>;
-
-  public abstract async sendToGroup(groupId: string, msg: IOctoMessage, tag: string): Promise<void>;
-
-  public abstract async at(userId: string): Promise<void>;
+  public abstract async send<T>(msg: IOctoMessage, options?: ISendOptions): Promise<T>;
 
   public abstract async getGroups(): Promise<OctoGroup[]>;
 
@@ -83,7 +92,10 @@ export default abstract class OctoBot<RE = unknown, RB = unknown> {
 
     for (const method of matchedModule.methodMap.values()) {
       const { methodName, trigger } = method;
-      const methods = method.trigger?.method || [];
+      if (trigger?.match === 'help' && method.helpText) {
+        event.reply({ content: method.helpText });
+      }
+      const methods = trigger?.method || [];
       const isTriggerMatched = methods.some((m) =>
         triggerMethod(ramainParams.join(' '), trigger?.match || '', m),
       );
@@ -101,10 +113,10 @@ export default abstract class OctoBot<RE = unknown, RB = unknown> {
       return;
     }
 
-    await this.callMethod(matchedModule.clazz as Function, matchedMethodName, this, event);
+    await this._callMethod(matchedModule.clazz as Function, matchedMethodName, this, event);
   }
 
-  private async callMethod(clazz: Function, methodName: string, bot: OctoBot, event: OctoEvent) {
+  private async _callMethod(clazz: Function, methodName: string, bot: OctoBot, event: OctoEvent) {
     const clazzInfo = moduleInfo.getModuleInfo(clazz);
 
     if (!clazzInfo) {

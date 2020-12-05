@@ -1,14 +1,16 @@
+import { OctoBot } from '..';
 import { IOctoEvent } from '../types/IEvent';
 import { IOctoMessage } from '../types/IMessage';
-import { IOctoUser } from '../types/IUser';
 import OctoGroup from './group';
+import OctoUser from './user';
 
-abstract class OctoEvent implements IOctoEvent {
+abstract class OctoEvent<RE = unknown> implements IOctoEvent {
   public constructor(
-    public rawEvent: unknown,
+    public rawEvent: RE,
     public id: string,
     public message: IOctoMessage,
-    public sender: IOctoUser,
+    public sender: OctoUser,
+    public bot: OctoBot,
     public groupId?: string,
   ) {}
 
@@ -20,8 +22,8 @@ abstract class OctoEvent implements IOctoEvent {
     return this.params.slice(1);
   }
 
-  public get attachment() {
-    return this.message.attachment;
+  public get attachments() {
+    return this.message.attachments;
   }
 
   public abstract get isAtMe(): boolean;
@@ -29,9 +31,9 @@ abstract class OctoEvent implements IOctoEvent {
   /**
    * 快速回复
    */
-  public abstract reply(message: IOctoMessage): void;
+  public abstract async reply(message: IOctoMessage): Promise<void>;
 
-  public abstract getMentions(): IOctoUser[];
+  public abstract getMentions(): OctoUser[];
 
   public abstract get group(): OctoGroup | null;
 }
