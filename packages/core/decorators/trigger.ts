@@ -4,7 +4,8 @@ import { ITrigger, TriggerMethod } from '../types/ITrigger';
 import { TClassDecoratorParams, TMethodDecoratorParams } from '../types/TDecorator';
 import TypeHelper from '../utils/typeHelper';
 
-export default function Trigger(trigger: ITrigger | string) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export default function Trigger(trigger: ITrigger | string): Function {
   return function decorate(...props: TMethodDecoratorParams | TClassDecoratorParams) {
     if (!trigger) {
       throw new Error('Trigger decorator must receive a string or trigger object');

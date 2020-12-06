@@ -7,7 +7,7 @@ import BaseService from './base/service';
 import Service from './decorators/service';
 import Trigger from './decorators/trigger';
 
-export { IOctoBotAsUser, IOctoBotConfig, IOctoOptions } from './types/ICore';
+export { IOctoBotConfig, IOctoOptions } from './types/ICore';
 export { IOctoEvent } from './types/IEvent';
 export { IAttachment, IOctoMessage, ISendOptions, SendingType } from './types/IMessage';
 export { IModuleInfo, IModuleMethodInfo } from './types/IModule';

@@ -10,7 +10,7 @@ export interface IOctoUser<RU = unknown> {
   id: string;
   userName: string;
   nickName: string;
-  rawUser: RU;
+  rawUser?: RU;
   isBot?: boolean;
 }
 

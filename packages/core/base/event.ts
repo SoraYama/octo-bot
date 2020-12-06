@@ -31,7 +31,7 @@ abstract class OctoEvent<RE = unknown> implements IOctoEvent {
   /**
    * 快速回复
    */
-  public abstract async reply(message: IOctoMessage): Promise<void>;
+  public abstract reply(message: IOctoMessage): Promise<void>;
 
   public abstract getMentions(): OctoUser[];
 

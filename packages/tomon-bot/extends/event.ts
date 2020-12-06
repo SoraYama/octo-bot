@@ -25,14 +25,17 @@ export default class TomonEvent extends OctoEvent<TRawEvent> {
     } = this.rawEvent;
     return ((mentions as unknown) as User[]).some((u) => u.id === this.bot.asUser.id);
   }
+
   public async reply(message: IOctoMessage): Promise<void> {
-    if (this.groupId) {
+    const channelId = this.rawEvent.d.channel_id;
+    if (channelId) {
       await this.bot.send(message, {
         type: SendingType.GroupOrChannel,
-        channelOrGroupId: this.groupId,
+        channelOrGroupId: channelId,
       });
     }
   }
+
   public getMentions(): OctoUser<User>[] {
     const mentions = (this.rawEvent.d.mentions as unknown) as User[];
     return (mentions || [])?.map((u) => this.bot.getUser(u.id));

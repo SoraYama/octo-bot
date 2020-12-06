@@ -14,7 +14,7 @@ export default class ConfigLoader extends BaseLoader {
     if (suffix.length > 0 && type !== this.loadPath) {
       return;
     }
-    const botConfig = await import(fileName);
+    const botConfig = (await import(fileName)).default;
     this.configMap.set(configName, botConfig);
   }
 }

@@ -6,7 +6,7 @@ export default function configureLog(ROOT: string) {
     appenders: {
       main: {
         type: 'file',
-        filename: path.resolve(ROOT, 'log', 'main'),
+        filename: path.resolve(ROOT, 'log', 'main.log'),
       },
       console: {
         type: 'console',
@@ -15,7 +15,7 @@ export default function configureLog(ROOT: string) {
     categories: {
       default: {
         appenders: ['main', 'console'],
-        level: 'info',
+        level: 'debug',
       },
     },
   });

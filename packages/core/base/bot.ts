@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { IOctoBotAsUser } from '../types/ICore';
 import { IOctoMessage, ISendOptions } from '../types/IMessage';
 import { IModuleInfo } from '../types/IModule';
 import triggerMethod from '../utils/triggerMethod';
@@ -16,7 +15,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
   public constructor(public ROOT: string, public platformName: string) {}
 
   public get logger() {
-    return configureLog(this.ROOT).getLogger(this.asUser.platform);
+    return configureLog(this.ROOT).getLogger(this.platformName);
   }
 
   public get asUser() {
@@ -25,14 +24,16 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   public getUser(id: string, userName?: string, nickName?: string, rawUser?: RU, isBot?: boolean) {
     const userInMap = this._userMap.get(id);
+
     if (!userInMap) {
-      if ([userName, nickName, rawUser].some((i) => TypeHelper.isUndef(i))) {
+      if ([userName, nickName].some((i) => TypeHelper.isUndef(i))) {
         throw new Error('Missing params when construct user');
       }
       const user = new OctoUser(id, userName!, nickName!, rawUser!, isBot);
       this._userMap.set(id, user);
       return user;
     }
+
     return userInMap;
   }
 
@@ -40,16 +41,17 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected abstract eventAdapter(rawEvent: RE): OctoEvent;
 
-  protected abstract botAdapter(rawBot: RB): IOctoBotAsUser;
+  protected abstract botAdapter(rawBot: RB): OctoUser;
 
-  public abstract async send<T>(msg: IOctoMessage, options?: ISendOptions): Promise<T>;
+  public abstract send<T>(msg: IOctoMessage, options?: ISendOptions): Promise<T>;
 
-  public abstract async getGroups(): Promise<OctoGroup[]>;
+  public abstract getGroups(): Promise<OctoGroup[]>;
 
-  public abstract async run(): Promise<void>;
+  public abstract run(): Promise<void>;
 
   protected async onMessage(rawEvent: RE, ignoreBotMsg?: boolean) {
     const event = this.eventAdapter(rawEvent);
+
     if (event.sender.id === this.asUser.id) {
       return;
     }
@@ -62,7 +64,9 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected async handleMessage(event: OctoEvent) {
     const { content } = event.message;
+
     this.logger.debug(`Received message: ${content}`);
+
     if (!content) {
       return;
     }
@@ -70,6 +74,8 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     const [rootPath, ...ramainParams] = event.params;
 
     let matchedModule: IModuleInfo | null = null;
+
+    console.log(moduleInfo.allModuleInfo, rootPath);
 
     for (const mod of moduleInfo.allModuleInfo) {
       if (mod.modulePath === rootPath) {

@@ -10,21 +10,21 @@ import ServiceLoader from '../loaders/serviceLoader';
 export default class Octo {
   private static _instance: Octo | null = null;
 
-  public static instance(options?: IOctoOptions) {
-    if (this._instance) {
-      return this._instance;
+  public static getInstance(options?: IOctoOptions) {
+    if (Octo._instance) {
+      return Octo._instance;
     }
 
     if (!options) {
       throw new Error('Options must be passed when init Octo instance');
     }
 
-    this._instance = new Octo(options);
-    return this._instance;
+    Octo._instance = new Octo(options);
+    return Octo._instance;
   }
 
   public static get env() {
-    return this.instance().env;
+    return Octo.getInstance().env;
   }
 
   public static get moduleInfo() {
@@ -36,14 +36,18 @@ export default class Octo {
   }
 
   public static get configMap() {
-    return this.instance().configLoader.configMap;
+    return Octo.getInstance().configLoader.configMap;
   }
 
-  private env: string;
-
-  private bots: OctoBot[];
+  public bots: OctoBot[];
 
   public configLoader: ConfigLoader;
+
+  public serviceLoader: ServiceLoader;
+
+  public moduleLoader: ModuleLoader;
+
+  private env: string;
 
   private constructor(private options: IOctoOptions) {
     const { ROOT, bots, env } = options;
@@ -55,7 +59,7 @@ export default class Octo {
       throw new Error(`bots should be not-empty-array`);
     }
 
-    if (bots.some((bot) => bot instanceof OctoBot)) {
+    if (bots.some((bot) => !(bot instanceof OctoBot))) {
       throw new Error(`bots should be instance of OctoBot`);
     }
 
@@ -63,9 +67,16 @@ export default class Octo {
     this.bots = bots;
 
     this.configLoader = new ConfigLoader(this.options.ROOT);
-    new ModuleLoader(this.options.ROOT);
-    new ServiceLoader(this.options.ROOT);
+    this.moduleLoader = new ModuleLoader(this.options.ROOT);
+    this.serviceLoader = new ServiceLoader(this.options.ROOT);
+  }
 
-    this.bots.forEach((bot) => bot.run());
+  public async start() {
+    await Promise.all(
+      [this.configLoader, this.moduleLoader, this.serviceLoader].map((loader) =>
+        loader.loadResolvedDir(),
+      ),
+    );
+    this.bots.forEach(async (bot) => await bot.run());
   }
 }

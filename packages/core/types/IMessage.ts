@@ -1,12 +1,4 @@
-export enum AttachmentType {
-  Reply = 'reply',
-  Image = 'image',
-  Audio = 'audio',
-  Video = 'video',
-}
-
 export interface IAttachment {
-  type: AttachmentType;
   uri?: string;
   fileName?: string;
 }

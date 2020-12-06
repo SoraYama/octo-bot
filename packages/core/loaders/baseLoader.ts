@@ -11,17 +11,17 @@ abstract class BaseLoader {
     protected ignorePaths: string[] = [],
   ) {
     this.logger = configureLog(ROOT).getLogger('loader');
-    this.loadResolvedDir();
+    this.loadResolvedDir.bind(this);
+  }
+
+  public async loadResolvedDir() {
+    await loadDir(this.getResolvedPath(this.loadPath), this.loadFn.bind(this), this.ignorePaths);
   }
 
   protected abstract loadFn(fileName: string): Promise<void>;
 
   protected getResolvedPath(...dirOrFileNames: string[]) {
     return path.resolve(this.ROOT, ...dirOrFileNames);
-  }
-
-  protected loadResolvedDir() {
-    loadDir(this.getResolvedPath(this.loadPath), this.loadFn, this.ignorePaths);
   }
 }
 

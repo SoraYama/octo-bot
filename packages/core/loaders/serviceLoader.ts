@@ -14,7 +14,7 @@ export default class ServiceLoader extends BaseLoader {
     const { name: clazzName, type, suffix } = parseFileName(fileName);
 
     if (suffix.length === 0 && type === this.loadPath) {
-      const clazz: Function = await import(fileName);
+      const clazz: Function = (await import(fileName)).default;
 
       if (clazz && clazz.prototype && clazz.prototype instanceof BaseService) {
         ServiceLoader.serviceMap.set(clazzName, clazz);

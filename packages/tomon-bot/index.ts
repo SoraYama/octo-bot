@@ -1,25 +1,22 @@
-import Octo, {
-  IOctoBotAsUser,
-  IOctoMessage,
-  ISendOptions,
-  OctoBot,
-  SendingType,
-} from '@octo-bot/core';
-import OctoEvent from '@octo-bot/core/base/event';
-import { AttachmentType } from '@octo-bot/core/types/IMessage';
+import Octo, { IOctoMessage, ISendOptions, OctoBot, SendingType } from '@octo-bot/core';
 import RawBot from 'tomon-sdk';
 import { User, WSPayload } from 'tomon-sdk/lib/types';
+import TomonEvent from './extends/event';
 import TomonGroup, { IRawGroup } from './extends/group';
+import { IRawAttatchment } from './types';
 
 class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, RawBot, User> {
-  protected eventAdapter(rawEvent: WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>): OctoEvent {}
-  protected botAdapter(rawBot: RawBot): IOctoBotAsUser {
-    throw new Error('Method not implemented.');
-  }
   public static rawBot = new RawBot();
 
   public get rawBot() {
     return TomonBot.rawBot;
+  }
+
+  public constructor(ROOT: string, platformName: string) {
+    super(ROOT, platformName);
+    this.rawBot.on('MESSAGE_CREATE', (evt) => {
+      this.onMessage(evt);
+    });
   }
 
   public async getGroups(): Promise<TomonGroup[]> {
@@ -54,13 +51,7 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
           return await this.rawBot.api.route(`/channels/${channelOrGroupId}/messages`).post({
             data: {
               content: msg.content,
-              files: msg.attachments
-                ?.filter((att) =>
-                  [AttachmentType.Audio, AttachmentType.Video, AttachmentType.Image].includes(
-                    att.type,
-                  ),
-                )
-                .map((att) => att.uri),
+              files: msg.attachments?.map((att) => att.uri),
             },
           });
         }
@@ -95,6 +86,36 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
     }
 
     this.rawBot.start(config.botToken);
+  }
+
+  protected eventAdapter(rawEvent: WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>): TomonEvent {
+    const message: IOctoMessage = {
+      content: rawEvent.d.content,
+      attachments: ((rawEvent.d.attachments as unknown) as IRawAttatchment[]).map((att) => ({
+        uri: att.url,
+        fileName: att.filename,
+      })),
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const author = (rawEvent.d.author as unknown) as any;
+
+    const { id, username, name, is_bot: isBot } = author;
+
+    return new TomonEvent(
+      rawEvent,
+      rawEvent.d.id,
+      message,
+      this.getUser(id, username, name, author, isBot),
+      this,
+      // TODO: fix in sdk
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (rawEvent.d as any).guild_id,
+    );
+  }
+
+  protected botAdapter(rawBot: RawBot) {
+    return this.getUser(rawBot.id!, rawBot.username, rawBot.name, undefined, true);
   }
 }
 

@@ -12,9 +12,9 @@ export function parseFileName(filePath: string) {
   };
 }
 
-export function loadDir(
+export async function loadDir(
   dirPath: string,
-  loadFn: (filePath: string) => void,
+  loadFn: (filePath: string) => Promise<void>,
   ignoreDirs: string[] = [],
 ) {
   if (!fs.existsSync(dirPath)) {
@@ -23,15 +23,15 @@ export function loadDir(
 
   const files = fs.readdirSync(dirPath);
 
-  files.forEach((file) => {
+  files.forEach(async (file) => {
     const filePath = path.resolve(dirPath, file);
 
     if (fs.statSync(filePath).isDirectory()) {
       if (ignoreDirs.indexOf(file) === -1) {
-        loadDir(filePath, loadFn);
+        await loadDir(filePath, loadFn);
       }
     } else {
-      loadFn(filePath);
+      await loadFn(filePath);
     }
   });
 }

@@ -1,14 +1,10 @@
 import OctoBot from '../base/bot';
-import { IBlockedUser, IOctoUser } from './IUser';
+import { IBlockedUser } from './IUser';
 
 export interface IOctoOptions {
   ROOT: string;
   bots: OctoBot[];
   env?: string;
-}
-
-export interface IOctoBotAsUser extends IOctoUser {
-  platform: string;
 }
 
 export interface IOctoBotConfig {
