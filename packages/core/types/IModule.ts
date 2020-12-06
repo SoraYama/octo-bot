@@ -2,7 +2,6 @@ import { ITrigger } from './ITrigger';
 
 export interface IModuleMethodInfo {
   methodName?: string;
-  helpText?: string;
   trigger?: ITrigger;
 }
 

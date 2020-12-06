@@ -1,8 +1,8 @@
-import { BaseModule, Trigger } from '@octo-bot/core';
+import { BaseModule, Trigger, TriggerMethod } from '@octo-bot/core';
 
 @Trigger('/echo')
 class EchoModule extends BaseModule {
-  @Trigger('test')
+  @Trigger({ match: 'test', method: [TriggerMethod.Prefix], helpText: '复读机一枚' })
   public async echo() {
     await this.event.reply({
       content: this.event.message.content,

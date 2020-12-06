@@ -13,7 +13,8 @@ export default function Trigger(trigger: ITrigger | string): Function {
     const handledTrigger: ITrigger = {
       method: TypeHelper.isString(trigger) ? [TriggerMethod.Prefix] : trigger.method,
       match: TypeHelper.isString(trigger) ? trigger : trigger.match,
-      onlyToMe: TypeHelper.isString(trigger) ? false : trigger.onlyToMe,
+      onlyToMe: TypeHelper.isString(trigger) ? false : trigger.onlyToMe || false,
+      helpText: TypeHelper.isString(trigger) ? 'To be completed' : trigger.helpText || '',
     };
     // decorate class
     if (props.length === 1) {

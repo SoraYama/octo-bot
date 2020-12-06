@@ -75,8 +75,6 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
     let matchedModule: IModuleInfo | null = null;
 
-    console.log(moduleInfo.allModuleInfo, rootPath);
-
     for (const mod of moduleInfo.allModuleInfo) {
       if (mod.modulePath === rootPath) {
         this.logger.debug(`Found module for message ${content}: ${mod.name}`);
@@ -98,13 +96,15 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
     for (const method of matchedModule.methodMap.values()) {
       const { methodName, trigger } = method;
-      if (trigger?.match === 'help' && method.helpText) {
-        event.reply({ content: method.helpText });
-      }
       const methods = trigger?.method || [];
       const isTriggerMatched = methods.some((m) =>
         triggerMethod(ramainParams.join(' '), trigger?.match || '', m),
       );
+
+      if (ramainParams[0].startsWith('help') && trigger?.helpText) {
+        event.reply({ content: trigger?.helpText });
+        return;
+      }
 
       if (isTriggerMatched) {
         this.logger.debug(

@@ -18,7 +18,7 @@ abstract class OctoEvent<RE = unknown> implements IOctoEvent {
     return this.message.content?.split?.(' ') || [];
   }
 
-  public get remainParams() {
+  public get remain() {
     return this.params.slice(1);
   }
 

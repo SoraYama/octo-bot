@@ -9,4 +9,5 @@ export interface ITrigger {
   method: TriggerMethod[];
   match: string;
   onlyToMe?: boolean;
+  helpText?: string;
 }
