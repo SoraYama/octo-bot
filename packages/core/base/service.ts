@@ -1,6 +1,6 @@
-import { IOctoEvent } from '../types/IEvent';
 import OctoBot from './bot';
+import OctoEvent from './event';
 
 export default class BaseService {
-  public constructor(public bot: OctoBot, public event: IOctoEvent) {}
+  public constructor(public bot: OctoBot, public event: OctoEvent) {}
 }

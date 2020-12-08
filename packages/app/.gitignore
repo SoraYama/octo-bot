@@ -1,3 +1,6 @@
 /log
 /node_modules
+
+config/*
+
 yarn-error.log
