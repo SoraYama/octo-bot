@@ -13,7 +13,7 @@ export { IOctoEvent } from './types/IEvent';
 export { IAttachment, IOctoMessage, ISendOptions, SendingType } from './types/IMessage';
 export { IModuleInfo, IModuleMethodInfo } from './types/IModule';
 export { ITrigger, TriggerMethod } from './types/ITrigger';
-export { IBlockedUser, IOctoUser } from './types/IUser';
+export { IOctoUser } from './types/IUser';
 
 export { Octo, BaseService, BaseModule, Service, OctoBot, Trigger, OctoGroup, Schedule };
 

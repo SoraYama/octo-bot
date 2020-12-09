@@ -1,5 +1,4 @@
 import OctoBot from '../base/bot';
-import { IBlockedUser } from './IUser';
 
 export interface IOctoOptions {
   ROOT: string;
@@ -12,6 +11,6 @@ export interface IOctoBotConfig {
   bannedModules: string[];
   superUserIds: string[];
   enabledGroupIds: string[];
-  blockedUser: IBlockedUser[];
+  blockedUser: string[];
   [key: string]: string | number | Record<string, unknown> | Array<unknown>;
 }

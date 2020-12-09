@@ -13,7 +13,3 @@ export interface IOctoUser<RU = unknown> {
   rawUser?: RU;
   isBot?: boolean;
 }
-
-export interface IBlockedUser extends IOctoUser {
-  until: number;
-}
