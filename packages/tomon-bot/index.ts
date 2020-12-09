@@ -25,6 +25,11 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
   }
 
   public async send(msg: IOctoMessage, options?: ISendOptions) {
+    if (!msg.content && (!msg.attachments || !msg.attachments.length)) {
+      this.logger.debug('Msg is empty');
+      return;
+    }
+
     const handledOptions: ISendOptions = {
       type: SendingType.GroupOrChannel,
       ...options,
