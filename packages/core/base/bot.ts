@@ -90,6 +90,15 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       return;
     }
 
+    if (
+      this.config.enabledGroupIds &&
+      event.groupId &&
+      this.config.enabledGroupIds.includes(event.groupId)
+    ) {
+      this.logger.debug(`User is blocked: ${event.sender.id}`);
+      return;
+    }
+
     const [rootPath, actionParam, ...ramainParams] = event.params;
 
     let matchedModule: IModuleInfo | null = null;

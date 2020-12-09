@@ -10,7 +10,7 @@ export interface IOctoBotConfig {
   botToken: string;
   bannedModules: string[];
   superUserIds: string[];
-  enabledGroupIds: string[];
+  enabledGroupIds: string[] | null;
   blockedUser: string[];
-  [key: string]: string | number | Record<string, unknown> | Array<unknown>;
+  [key: string]: string | number | Array<unknown> | null;
 }
