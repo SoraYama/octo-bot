@@ -3,9 +3,9 @@
 
 
 "@types/node@*":
-  version "14.14.10"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.10.tgz?cache=0&sync_timestamp=1606763679953&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.10.tgz#5958a82e41863cfc71f2307b3748e3491ba03785"
-  integrity sha1-WVioLkGGPPxx8jB7N0jjSRugN4U=
+  version "14.14.11"
+  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.11.tgz?cache=0&sync_timestamp=1607445075166&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.11.tgz#fc25a4248a5e8d0837019b1d170146d07334abe0"
+  integrity sha1-/CWkJIpejQg3AZsdFwFG0HM0q+A=
 
 "@types/pako@^1.0.1":
   version "1.0.1"
@@ -90,7 +90,7 @@ mime-types@^2.1.12:
 
 ms@2.0.0:
   version "2.0.0"
-  resolved "https://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
+  resolved "https://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz?cache=0&sync_timestamp=1607433899126&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fms%2Fdownload%2Fms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
   integrity sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
 
 pako@^1.0.11:
@@ -100,7 +100,7 @@ pako@^1.0.11:
 
 tomon-sdk@^0.2.2:
   version "0.2.2"
-  resolved "https://registry.npm.alibaba-inc.com/tomon-sdk/download/tomon-sdk-0.2.2.tgz#179b4b254d66815928a7a54397f416b74ea0c30a"
+  resolved "https://registry.npm.taobao.org/tomon-sdk/download/tomon-sdk-0.2.2.tgz#179b4b254d66815928a7a54397f416b74ea0c30a"
   integrity sha1-F5tLJU1mgVkop6VDl/QWt06gwwo=
   dependencies:
     "@types/pako" "^1.0.1"

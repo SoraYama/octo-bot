@@ -25,7 +25,7 @@ export default function Schedule(cronStr: string): Function {
     const [target, methodName] = props;
 
     // decorate class
-    if (!(target.constructor instanceof BaseModule)) {
+    if (!(target instanceof BaseModule)) {
       throw new Error(`Schedule decorator must be decorate on class extends BaseModule`);
     }
 

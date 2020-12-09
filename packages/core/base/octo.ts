@@ -81,8 +81,6 @@ export default class Octo {
       ),
     );
 
-    await Promise.all(this.bots.map((bot) => bot.run.bind(bot)));
-
     this.bots.forEach((bot) => {
       [...schedule.allSchedule].forEach((item) => {
         const { clazz, methodName, cronStr } = item;
@@ -94,6 +92,8 @@ export default class Octo {
           Promise.resolve(Reflect.apply(method, instance, []));
         });
       });
+
+      bot.run();
     });
   }
 }
