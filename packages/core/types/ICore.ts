@@ -8,8 +8,8 @@ export interface IOctoOptions {
 }
 
 export interface IOctoBotConfig {
-  platformName: string;
   botToken: string;
+  bannedModules: string[];
   superUserIds: string[];
   enabledGroupIds: string[];
   blockedUser: IBlockedUser[];

@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { IOctoBotConfig } from '../types/ICore';
 import { IOctoMessage, ISendOptions } from '../types/IMessage';
 import { IModuleInfo } from '../types/IModule';
 import triggerMethod from '../utils/triggerMethod';
 import TypeHelper from '../utils/typeHelper';
+import { defaultConfig } from './config';
 import OctoEvent from './event';
 import OctoGroup from './group';
 import moduleInfo from './info';
@@ -11,6 +13,16 @@ import OctoUser from './user';
 
 export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> {
   private _userMap = new Map<string, OctoUser<RU>>();
+
+  private _config: IOctoBotConfig = defaultConfig;
+
+  public get config() {
+    return this._config;
+  }
+
+  public set config(c: IOctoBotConfig) {
+    this._config = c;
+  }
 
   public constructor(public ROOT: string, public platformName: string) {}
 
@@ -90,7 +102,12 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     }
 
     if (!matchedModule.methodMap) {
-      this.logger.debug(`module ${matchedModule.name} has no method Map`);
+      this.logger.debug(`Module ${matchedModule.name} has no method Map`);
+      return;
+    }
+
+    if (this.config.bannedModules.includes(matchedModule.name || '')) {
+      this.logger.debug(`Module ${matchedModule.name} is banned in config`);
       return;
     }
 

@@ -84,6 +84,18 @@ export default class Octo {
     this.bots.forEach((bot) => {
       [...schedule.allSchedule].forEach((item) => {
         const { clazz, methodName, cronStr } = item;
+        const info = moduleInfo.getModuleInfo(clazz);
+        const botConfig = this.configLoader.configMap.get(bot.platformName);
+
+        if (!botConfig) {
+          throw new Error(`Missing platform: ${bot.platformName} bot config`);
+        }
+
+        bot.config = botConfig;
+
+        if (botConfig.bannedModules.includes(info?.name || '')) {
+          return;
+        }
 
         const instance = Reflect.construct(clazz!, [bot]);
         const method = Reflect.get(instance, methodName!);
