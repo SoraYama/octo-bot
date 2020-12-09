@@ -23,7 +23,10 @@ export default class TomonEvent extends OctoEvent<TRawEvent> {
     const {
       d: { mentions },
     } = this.rawEvent;
-    return ((mentions as unknown) as User[]).some((u) => u.id === this.bot.asUser.id);
+    if (!mentions) {
+      return false;
+    }
+    return mentions.some((u) => u.id === this.bot.asUser.id);
   }
 
   public async reply(message: IOctoMessage): Promise<void> {

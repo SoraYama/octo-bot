@@ -98,10 +98,10 @@ pako@^1.0.11:
   resolved "https://registry.npm.taobao.org/pako/download/pako-1.0.11.tgz?cache=0&sync_timestamp=1605741925189&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpako%2Fdownload%2Fpako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha1-bJWZ00DVTf05RjgCUqNXBaa5kr8=
 
-tomon-sdk@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npm.taobao.org/tomon-sdk/download/tomon-sdk-0.2.0.tgz#df9af0620cd61f72867bdb405072d12a8e1c4d61"
-  integrity sha1-35rwYgzWH3KGe9tAUHLRKo4cTWE=
+tomon-sdk@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.npm.alibaba-inc.com/tomon-sdk/download/tomon-sdk-0.2.2.tgz#179b4b254d66815928a7a54397f416b74ea0c30a"
+  integrity sha1-F5tLJU1mgVkop6VDl/QWt06gwwo=
   dependencies:
     "@types/pako" "^1.0.1"
     "@types/url-join" "^4.0.0"

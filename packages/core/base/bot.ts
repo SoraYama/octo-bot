@@ -63,7 +63,9 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
   }
 
   protected async handleMessage(event: OctoEvent) {
-    const { content } = event.message;
+    let { content } = event.message;
+
+    content = content?.trim() || '';
 
     this.logger.debug(`Received message: ${content}`);
 
@@ -71,7 +73,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       return;
     }
 
-    const [rootPath, ...ramainParams] = event.params;
+    const [rootPath, actionParam, ...ramainParams] = event.params;
 
     let matchedModule: IModuleInfo | null = null;
 
@@ -96,15 +98,16 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
     for (const method of matchedModule.methodMap.values()) {
       const { methodName, trigger } = method;
-      const methods = trigger?.method || [];
-      const isTriggerMatched = methods.some((m) =>
-        triggerMethod(ramainParams.join(' '), trigger?.match || '', m),
-      );
 
-      if (ramainParams[0].startsWith('help') && trigger?.helpText) {
+      if (actionParam.startsWith('help') && trigger?.helpText) {
         event.reply({ content: trigger?.helpText });
         return;
       }
+
+      const methods = trigger?.methods || [];
+      const isTriggerMatched = methods.some((m) =>
+        triggerMethod([actionParam, ...ramainParams].join(' '), trigger?.match || '', m),
+      );
 
       if (isTriggerMatched) {
         this.logger.debug(

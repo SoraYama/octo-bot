@@ -3,7 +3,6 @@ import RawBot from 'tomon-sdk';
 import { User, WSPayload } from 'tomon-sdk/lib/types';
 import TomonEvent from './extends/event';
 import TomonGroup, { IRawGroup } from './extends/group';
-import { IRawAttatchment } from './types';
 
 class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, RawBot, User> {
   public static rawBot = new RawBot();
@@ -91,22 +90,19 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
   protected eventAdapter(rawEvent: WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>): TomonEvent {
     const message: IOctoMessage = {
       content: rawEvent.d.content,
-      attachments: ((rawEvent.d.attachments as unknown) as IRawAttatchment[]).map((att) => ({
+      attachments: rawEvent.d.attachments.map((att) => ({
         uri: att.url,
         fileName: att.filename,
       })),
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const author = (rawEvent.d.author as unknown) as any;
-
-    const { id, username, name, is_bot: isBot } = author;
+    const { id, username, name, is_bot: isBot } = rawEvent.d.author;
 
     return new TomonEvent(
       rawEvent,
       rawEvent.d.id,
       message,
-      this.getUser(id, username, name, author, isBot),
+      this.getUser(id, username, name, rawEvent.d.author, isBot),
       this,
       // TODO: fix in sdk
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

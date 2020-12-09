@@ -6,7 +6,7 @@ class EchoModule extends BaseModule {
   @Service('echo')
   private echoService!: EchoService;
 
-  @Trigger({ match: 'test', method: [TriggerMethod.Prefix], helpText: '复读机一枚' })
+  @Trigger({ match: 'test', methods: [TriggerMethod.Prefix], helpText: '复读机一枚' })
   public async echo() {
     await this.event.reply({
       content: this.echoService.getRemain(),

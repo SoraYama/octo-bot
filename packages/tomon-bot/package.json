@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "dependencies": {
     "@octo-bot/core": "^1.0.0",
-    "tomon-sdk": "^0.2.0"
+    "tomon-sdk": "^0.2.2"
   }
 }

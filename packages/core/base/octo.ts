@@ -1,3 +1,5 @@
+import cron from 'node-cron';
+
 import { IOctoOptions } from '../types/ICore';
 import packageModule from '../package.json';
 import TypeHelper from '../utils/typeHelper';
@@ -6,6 +8,7 @@ import moduleInfo from './info';
 import ConfigLoader from '../loaders/configLoader';
 import ModuleLoader from '../loaders/moduleLoader';
 import ServiceLoader from '../loaders/serviceLoader';
+import schedule from './schedule';
 
 export default class Octo {
   private static _instance: Octo | null = null;
@@ -77,6 +80,20 @@ export default class Octo {
         loader.loadResolvedDir(),
       ),
     );
-    this.bots.forEach(async (bot) => await bot.run());
+
+    await Promise.all(this.bots.map((bot) => bot.run.bind(bot)));
+
+    this.bots.forEach((bot) => {
+      [...schedule.allSchedule].forEach((item) => {
+        const { clazz, methodName, cronStr } = item;
+
+        const instance = Reflect.construct(clazz!, [bot]);
+        const method = Reflect.get(instance, methodName!);
+
+        cron.schedule(cronStr!, () => {
+          Promise.resolve(Reflect.apply(method, instance, []));
+        });
+      });
+    });
   }
 }

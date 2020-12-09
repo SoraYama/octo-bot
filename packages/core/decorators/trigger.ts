@@ -11,7 +11,7 @@ export default function Trigger(trigger: ITrigger | string): Function {
       throw new Error('Trigger decorator must receive a string or trigger object');
     }
     const handledTrigger: ITrigger = {
-      method: TypeHelper.isString(trigger) ? [TriggerMethod.Prefix] : trigger.method,
+      methods: TypeHelper.isString(trigger) ? [TriggerMethod.Prefix] : trigger.methods,
       match: TypeHelper.isString(trigger) ? trigger : trigger.match,
       onlyToMe: TypeHelper.isString(trigger) ? false : trigger.onlyToMe || false,
       helpText: TypeHelper.isString(trigger) ? 'To be completed' : trigger.helpText || '',

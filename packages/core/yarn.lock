@@ -14,10 +14,22 @@
   resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.165.tgz?cache=0&sync_timestamp=1604603009372&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Flodash%2Fdownload%2F%40types%2Flodash-4.14.165.tgz#74d55d947452e2de0742bad65270433b63a8c30f"
   integrity sha1-dNVdlHRS4t4HQrrWUnBDO2Ooww8=
 
+"@types/node-cron@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.npm.alibaba-inc.com/@types/node-cron/download/@types/node-cron-2.0.3.tgz#b5bb940523d265f6a36548856ec0c278ea5a35d6"
+  integrity sha1-tbuUBSPSZfajZUiFbsDCeOpaNdY=
+  dependencies:
+    "@types/tz-offset" "*"
+
 "@types/node@*":
   version "14.14.10"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.14.10.tgz?cache=0&sync_timestamp=1606763679953&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.14.10.tgz#5958a82e41863cfc71f2307b3748e3491ba03785"
   integrity sha1-WVioLkGGPPxx8jB7N0jjSRugN4U=
+
+"@types/tz-offset@*":
+  version "0.0.0"
+  resolved "https://registry.npm.alibaba-inc.com/@types/tz-offset/download/@types/tz-offset-0.0.0.tgz#d58f1cebd794148d245420f8f0660305d320e565"
+  integrity sha1-1Y8c69eUFI0kVCD48GYDBdMg5WU=
 
 at-least-node@^1.0.0:
   version "1.0.0"
@@ -107,6 +119,19 @@ ms@2.1.2:
   resolved "https://registry.npm.taobao.org/ms/download/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=
 
+node-cron@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npm.alibaba-inc.com/node-cron/download/node-cron-2.0.3.tgz#b9649784d0d6c00758410eef22fa54a10e3f602d"
+  integrity sha1-uWSXhNDWwAdYQQ7vIvpUoQ4/YC0=
+  dependencies:
+    opencollective-postinstall "^2.0.0"
+    tz-offset "0.0.1"
+
+opencollective-postinstall@^2.0.0:
+  version "2.0.3"
+  resolved "https://registry.npm.alibaba-inc.com/opencollective-postinstall/download/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
+  integrity sha1-eg//l49tv6TQBiOPusmO1BmMMlk=
+
 rfdc@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npm.taobao.org/rfdc/download/rfdc-1.1.4.tgz#ba72cc1367a0ccd9cf81a870b3b58bd3ad07f8c2"
@@ -125,6 +150,11 @@ typescript@^4.1.2:
   version "4.1.2"
   resolved "https://registry.npm.taobao.org/typescript/download/typescript-4.1.2.tgz?cache=0&sync_timestamp=1607150892550&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-4.1.2.tgz#6369ef22516fe5e10304aae5a5c4862db55380e9"
   integrity sha1-Y2nvIlFv5eEDBKrlpcSGLbVTgOk=
+
+tz-offset@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npm.alibaba-inc.com/tz-offset/download/tz-offset-0.0.1.tgz#fef920257024d3583ed9072a767721a18bdb8a76"
+  integrity sha1-/vkgJXAk01g+2QcqdnchoYvbinY=
 
 universalify@^0.1.0:
   version "0.1.2"

@@ -6,7 +6,7 @@ export enum TriggerMethod {
 }
 
 export interface ITrigger {
-  method: TriggerMethod[];
+  methods: TriggerMethod[];
   match: string;
   onlyToMe?: boolean;
   helpText?: string;
