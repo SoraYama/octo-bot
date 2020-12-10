@@ -19,14 +19,17 @@ export default class TomonEvent extends OctoEvent<TRawEvent> {
     super(rawEvent, id, message, sender, bot, groupId);
   }
 
-  public get isAtMe(): boolean {
+  public async checkIsAtMe() {
     const {
       d: { mentions },
     } = this.rawEvent;
+
+    const me = await this.bot.getBotAsUser();
+
     if (!mentions) {
       return false;
     }
-    return mentions.some((u) => u.id === this.bot.asUser.id);
+    return mentions.some((u) => u.id === me.id);
   }
 
   public async reply(message: IOctoMessage): Promise<void> {

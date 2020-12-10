@@ -1,23 +1,10 @@
 import { IOctoUser, OctoGroup } from '@octo-bot/core';
+import { Guild } from 'tomon-sdk';
 import TomonBot from '..';
 
-export interface IRawGroup {
-  id: string; // required	群组的 ID
-  name: string; // required	群组的名称
-  icon?: string; // required	群组的图标 hash
-  background?: string; // required	群组的背景图 hash
-  background_props?: string; // required	群组背景图的属性
-  position: number; // require 群组的位置，自己群组的排序
-  joined_at: string; // required 群组的加入时间, ISO 8601 格式
-  owner_id: string; // required 群组的所有者 ID
-  system_channel_id?: string; // required	群组的系统频道 ID
-  system_channel_flags: number; // required	群组的系统频道 Flag, 控制是否发送系统消息
-  default_message_notifications: number; // required	群组的默认通知类型
-}
-
-export default class TomonGroup extends OctoGroup {
-  public async getGroup(): Promise<IRawGroup> {
-    return await TomonBot.rawBot.api.route(`/guilds/${this.groupId}`).get();
+export default class TomonGroup extends OctoGroup<TomonBot> {
+  public async getGroup(): Promise<Guild> {
+    return await this.bot.rawBot.api.route(`/guilds/${this.groupId}`).get();
   }
 
   public async getGroupName(): Promise<string> {
@@ -34,7 +21,7 @@ export default class TomonGroup extends OctoGroup {
   }
 
   public async getGroupMember(): Promise<IOctoUser[]> {
-    const members = await TomonBot.rawBot.api.route(`/guilds/${this.groupId}/members`).get();
+    const members = await this.bot.rawBot.api.route(`/guilds/${this.groupId}/members`).get();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (members || []).map((member: any) => {
       const { user = {} } = member;
@@ -44,6 +31,6 @@ export default class TomonGroup extends OctoGroup {
   }
 
   public async getChannelsInGroup() {
-    return await TomonBot.rawBot.api.route(`/guilds/${this.groupId}/channels`).get();
+    return await this.bot.rawBot.api.route(`/guilds/${this.groupId}/channels`).get();
   }
 }

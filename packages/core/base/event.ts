@@ -26,7 +26,7 @@ abstract class OctoEvent<RE = unknown> implements IOctoEvent {
     return this.message.attachments;
   }
 
-  public abstract get isAtMe(): boolean;
+  public abstract checkIsAtMe(): boolean | Promise<boolean>;
 
   /**
    * 快速回复

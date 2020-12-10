@@ -30,8 +30,8 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     return configureLog(this.ROOT).getLogger(this.platformName);
   }
 
-  public get asUser() {
-    return this.botAdapter(this.rawBot);
+  public async getBotAsUser() {
+    return await this.botAdapter(this.rawBot);
   }
 
   public getUser(id: string, userName?: string, nickName?: string, rawUser?: RU, isBot?: boolean) {
@@ -41,7 +41,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       if ([userName, nickName].some((i) => TypeHelper.isUndef(i))) {
         throw new Error('Missing params when construct user');
       }
-      const user = new OctoUser(id, userName!, nickName!, rawUser!, isBot);
+      const user = new OctoUser(id, userName!, nickName!, rawUser, isBot);
       this._userMap.set(id, user);
       return user;
     }
@@ -53,7 +53,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected abstract eventAdapter(rawEvent: RE): OctoEvent;
 
-  protected abstract botAdapter(rawBot: RB): OctoUser;
+  protected abstract botAdapter(rawBot: RB): Promise<OctoUser>;
 
   public abstract send<T>(msg: IOctoMessage, options?: ISendOptions): Promise<T>;
 
@@ -63,8 +63,9 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected async onMessage(rawEvent: RE, ignoreBotMsg?: boolean) {
     const event = this.eventAdapter(rawEvent);
+    const asUser = await this.getBotAsUser();
 
-    if (event.sender.id === this.asUser.id) {
+    if (event.sender.id === asUser.id) {
       return;
     }
     if (event.sender.isBot && ignoreBotMsg) {

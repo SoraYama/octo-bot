@@ -9,6 +9,7 @@
   "dependencies": {
     "@octo-bot/core": "^1.0.0",
     "@octo-bot/tomon-bot": "^1.0.0",
+    "socks-proxy-agent": "^5.0.0",
     "ts-node": "^9.1.0",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.1.2"

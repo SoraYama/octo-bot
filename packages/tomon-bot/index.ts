@@ -1,25 +1,25 @@
 import Octo, { IOctoMessage, ISendOptions, OctoBot, SendingType } from '@octo-bot/core';
 import RawBot from 'tomon-sdk';
-import { User, WSPayload } from 'tomon-sdk/lib/types';
+import { Guild, User, WSPayload } from 'tomon-sdk/lib/types';
 import TomonEvent from './extends/event';
-import TomonGroup, { IRawGroup } from './extends/group';
+import TomonGroup from './extends/group';
 
 class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, RawBot, User> {
-  public static rawBot = new RawBot();
+  public rawBot: RawBot;
 
-  public get rawBot() {
-    return TomonBot.rawBot;
-  }
-
-  public constructor(ROOT: string, platformName: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  public constructor(ROOT: string, platformName: string, rawBotOptions?: any) {
     super(ROOT, platformName);
+
+    this.rawBot = new RawBot(rawBotOptions);
+
     this.rawBot.on('MESSAGE_CREATE', (evt) => {
       this.onMessage(evt);
     });
   }
 
   public async getGroups(): Promise<TomonGroup[]> {
-    const groups: IRawGroup[] = await this.rawBot.api.route('/users/@me/guilds').get();
+    const groups: Guild[] = await this.rawBot.api.route('/users/@me/guilds').get();
     this.logger.debug('fetched guilds: ', groups);
     return groups.map((g) => new TomonGroup(g.id, this));
   }
@@ -115,8 +115,10 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
     );
   }
 
-  protected botAdapter(rawBot: RawBot) {
-    return this.getUser(rawBot.id!, rawBot.username, rawBot.name, undefined, true);
+  protected async botAdapter() {
+    const me: User = await this.rawBot.api.route('/users/@me').get();
+    const { id, username, name, is_bot } = me;
+    return this.getUser(id, username, name, me, is_bot);
   }
 }
 
