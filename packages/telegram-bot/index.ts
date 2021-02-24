@@ -1,6 +1,5 @@
-import Telegraf from 'telegraf';
-import { TelegrafContext } from 'telegraf/typings/context';
-import { TelegrafOptions } from 'telegraf/typings/telegraf';
+import { Telegraf } from 'telegraf';
+import TelegrafContext from 'telegraf/typings/context';
 import { User } from 'telegraf/typings/telegram-types';
 import { IOctoMessage, ISendOptions, OctoBot, OctoEvent, OctoUser } from '@octo-bot/core';
 import TgEvent from './extends/event';
@@ -14,13 +13,13 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
   public constructor(
     ROOT: string,
     platformName: string,
-    private _telegrafOptions?: TelegrafOptions,
+    private _telegrafOptions?: Partial<Telegraf.Options<TelegrafContext>>,
   ) {
     super(ROOT, platformName);
   }
 
   public get rawBot(): Telegraf<TelegrafContext> {
-    if (!this.rawBot) {
+    if (!this._rawBot) {
       throw new Error('Should call `run` method first');
     }
     return this._rawBot!;
@@ -38,6 +37,10 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
   }
 
   public async run(): Promise<void> {
+    if (!this.config.botToken) {
+      this.logger.fatal('Telegram bot token is required!');
+      return;
+    }
     this._rawBot = new Telegraf(this.config.botToken, this._telegrafOptions);
     this._rawBot.on('message', (ctx) => {
       const { chat, from, message } = ctx;
@@ -48,6 +51,8 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
       this.userAdapter(from);
       this.onMessage(ctx);
     });
+    this._rawBot.launch();
+    this.logger.info('Telegram bot started');
   }
 
   public async send(msg: IOctoMessage, options?: ISendOptions) {
@@ -67,8 +72,14 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
     if (!message) {
       throw new Error('No message in Telegraf Context');
     }
+    let content = '';
+
+    if (rawEvent.message && 'text' in rawEvent.message) {
+      content = rawEvent.message.text;
+    }
+
     const octoMessage: IOctoMessage = {
-      content: message.text,
+      content,
       attachments: [],
     };
 

@@ -10,7 +10,7 @@ export default class TgGroup extends OctoGroup<TelegramBot> {
 
   public async getGroupMember(): Promise<OctoUser<User>[]> {
     const chat = await this.bot.rawBot.telegram.getChat(this.groupId);
-    if (!chat.all_members_are_administrators) {
+    if (!('all_members_are_administrators' in chat)) {
       this.bot.logger.warn(`Chat ${this.groupId} members are not all admins`);
     }
     const admins = await this.bot.rawBot.telegram.getChatAdministrators(this.groupId);
@@ -30,7 +30,10 @@ export default class TgGroup extends OctoGroup<TelegramBot> {
 
   public async getGroupName(): Promise<string> {
     const chat = await this.bot.rawBot.telegram.getChat(this.groupId);
-    return chat.title || '';
+    if ('title' in chat) {
+      return chat.title;
+    }
+    return '';
   }
 
   public async isUserInGroup(uid: string): Promise<boolean> {

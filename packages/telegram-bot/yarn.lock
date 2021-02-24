@@ -2,16 +2,28 @@
 # yarn lockfile v1
 
 
-debug@^4.0.1:
+abort-controller@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.alibaba-inc.com/abort-controller/download/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
+  integrity sha1-6vVNU7YrrkE46AnKIlyEOabvs5I=
+  dependencies:
+    event-target-shim "^5.0.0"
+
+debug@^4.3.1:
   version "4.3.1"
-  resolved "https://registry.npm.taobao.org/debug/download/debug-4.3.1.tgz?cache=0&sync_timestamp=1607566580543&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdebug%2Fdownload%2Fdebug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
+  resolved "https://registry.npm.alibaba-inc.com/debug/download/debug-4.3.1.tgz#f0d229c505e0c6d8c49ac553d1b13dc183f6b2ee"
   integrity sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=
   dependencies:
     ms "2.1.2"
 
-minimist@^1.2.0:
+event-target-shim@^5.0.0:
+  version "5.0.1"
+  resolved "https://registry.npm.alibaba-inc.com/event-target-shim/download/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
+  integrity sha1-XU0+vflYPWOlMzzi3rdICrKwV4k=
+
+minimist@^1.2.5:
   version "1.2.5"
-  resolved "https://registry.npm.taobao.org/minimist/download/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
+  resolved "https://registry.npm.alibaba-inc.com/minimist/download/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha1-Z9ZgFLZqaoqqDAg8X9WN9OTpdgI=
 
 module-alias@^2.2.2:
@@ -24,29 +36,36 @@ ms@2.1.2:
   resolved "https://registry.npm.taobao.org/ms/download/ms-2.1.2.tgz?cache=0&sync_timestamp=1607433905701&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fms%2Fdownload%2Fms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=
 
-node-fetch@^2.2.0:
+node-fetch@^2.6.1:
   version "2.6.1"
-  resolved "https://registry.npm.taobao.org/node-fetch/download/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
+  resolved "https://registry.npm.alibaba-inc.com/node-fetch/download/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha1-BFvTI2Mfdu0uK1VXM5RBa2OaAFI=
 
-sandwich-stream@^2.0.1:
+p-timeout@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.alibaba-inc.com/p-timeout/download/p-timeout-4.1.0.tgz#788253c0452ab0ffecf18a62dff94ff1bd09ca0a"
+  integrity sha1-eIJTwEUqsP/s8Ypi3/lP8b0Jygo=
+
+sandwich-stream@^2.0.2:
   version "2.0.2"
-  resolved "https://registry.npm.taobao.org/sandwich-stream/download/sandwich-stream-2.0.2.tgz#6d1feb6cf7e9fe9fadb41513459a72c2e84000fa"
+  resolved "https://registry.npm.alibaba-inc.com/sandwich-stream/download/sandwich-stream-2.0.2.tgz#6d1feb6cf7e9fe9fadb41513459a72c2e84000fa"
   integrity sha1-bR/rbPfp/p+ttBUTRZpywuhAAPo=
 
-telegraf@^3.38.0:
-  version "3.38.0"
-  resolved "https://registry.npm.taobao.org/telegraf/download/telegraf-3.38.0.tgz#745b447547a8e6cdb626055e4d616058aaae0759"
-  integrity sha1-dFtEdUeo5s22JgVeTWFgWKquB1k=
+telegraf@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.alibaba-inc.com/telegraf/download/telegraf-4.1.0.tgz#b20d4aa6acdf6aab3fc054805e87633573f95928"
+  integrity sha1-sg1Kpqzfaqs/wFSAXodjNXP5WSg=
   dependencies:
-    debug "^4.0.1"
-    minimist "^1.2.0"
+    abort-controller "^3.0.0"
+    debug "^4.3.1"
+    minimist "^1.2.5"
     module-alias "^2.2.2"
-    node-fetch "^2.2.0"
-    sandwich-stream "^2.0.1"
-    telegram-typings "^3.6.0"
+    node-fetch "^2.6.1"
+    p-timeout "^4.1.0"
+    sandwich-stream "^2.0.2"
+    typegram "^3.1.4"
 
-telegram-typings@^3.6.0:
-  version "3.6.1"
-  resolved "https://registry.npm.taobao.org/telegram-typings/download/telegram-typings-3.6.1.tgz#1288d547f8694b61f1c01c2993e295f3114d9e25"
-  integrity sha1-EojVR/hpS2HxwBwpk+KV8xFNniU=
+typegram@^3.1.4:
+  version "3.1.10"
+  resolved "https://registry.npm.alibaba-inc.com/typegram/download/typegram-3.1.10.tgz#a0dcea705ef6386f8476dcd511a43d763d122b55"
+  integrity sha1-oNzqcF72OG+EdtzVEaQ9dj0SK1U=

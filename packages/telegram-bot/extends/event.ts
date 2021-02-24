@@ -1,5 +1,5 @@
 import { IOctoMessage, OctoUser, OctoEvent } from '@octo-bot/core';
-import { TelegrafContext } from 'telegraf/typings/context';
+import TelegrafContext from 'telegraf/typings/context';
 import { User } from 'telegraf/typings/telegram-types';
 import TelegramBot from '..';
 import TgGroup from './group';
@@ -24,20 +24,26 @@ class TgEvent extends OctoEvent<TelegrafContext, User> {
   }
 
   public getMentions(): OctoUser<User>[] {
+    if (!this.rawEvent.message || !('entities' in this.rawEvent.message)) {
+      return [];
+    }
     return (
-      this.rawEvent.message?.entities
+      (this.rawEvent.message?.entities
         ?.filter((item) => ['text_mentions', 'mentions'].includes(item.type))
         .map((item) => {
-          if (item.user) {
+          if ('user' in item) {
             return this.bot.userAdapter(item.user);
           }
-          return [...this.bot.users].find(
-            (u) =>
-              u.userName ===
-              this.rawEvent.message?.text?.slice(item.offset + 1, item.offset + 1 + item.length),
-          )!;
+          const { message } = this.rawEvent;
+          if (message && 'text' in message) {
+            return [...this.bot.users].find(
+              (u) =>
+                u.userName === message.text.slice(item.offset + 1, item.offset + 1 + item.length),
+            )!;
+          }
+          return null;
         })
-        .filter((item) => !!item) || []
+        .filter((item) => !!item) as OctoUser<User>[]) || []
     );
   }
 

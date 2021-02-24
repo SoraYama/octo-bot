@@ -1,6 +1,0 @@
-[2020-12-10T01:50:27.475] [DEBUG] tomon - Received message: /echo test test
-[2020-12-10T01:50:27.477] [DEBUG] tomon - Found module for message /echo test test: echo
-[2020-12-10T01:50:27.477] [DEBUG] tomon - module echo's method echo matched msg /echo test test
-[2020-12-10T02:19:56.594] [DEBUG] tomon - Received message: /echo test 1
-[2020-12-10T02:19:56.596] [DEBUG] tomon - Found module for message /echo test 1: echo
-[2020-12-10T02:19:56.597] [DEBUG] tomon - module echo's method echo matched msg /echo test 1
