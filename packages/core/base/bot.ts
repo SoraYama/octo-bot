@@ -30,23 +30,35 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     return configureLog(this.ROOT).getLogger(this.platformName);
   }
 
+  public get users() {
+    return this._userMap.values();
+  }
+
   public async getBotAsUser() {
     return await this.botAdapter(this.rawBot);
   }
 
-  public getUser(id: string, userName?: string, nickName?: string, rawUser?: RU, isBot?: boolean) {
+  public getUserById(id: string) {
     const userInMap = this._userMap.get(id);
 
     if (!userInMap) {
-      if ([userName, nickName].some((i) => TypeHelper.isUndef(i))) {
-        throw new Error('Missing params when construct user');
-      }
-      const user = new OctoUser(id, userName!, nickName!, rawUser, isBot);
-      this._userMap.set(id, user);
-      return user;
+      return null;
     }
 
     return userInMap;
+  }
+
+  public setAndGetUser(
+    id: string,
+    userName: string,
+    nickName: string,
+    rawUser: RU,
+    isBot: boolean,
+  ) {
+    const user = new OctoUser(id, userName, nickName, rawUser, isBot);
+    this._userMap.set(id, user);
+
+    return user;
   }
 
   public abstract get rawBot(): RB;
@@ -55,7 +67,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected abstract botAdapter(rawBot: RB): Promise<OctoUser>;
 
-  public abstract send<T>(msg: IOctoMessage, options?: ISendOptions): Promise<T>;
+  public abstract send(msg: IOctoMessage, options?: ISendOptions): Promise<unknown>;
 
   public abstract getGroups(): Promise<OctoGroup[]>;
 

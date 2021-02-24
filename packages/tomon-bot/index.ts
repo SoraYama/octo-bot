@@ -107,7 +107,7 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
       rawEvent,
       rawEvent.d.id,
       message,
-      this.getUser(id, username, name, rawEvent.d.author, isBot),
+      this.setAndGetUser(id, username, name, rawEvent.d.author, isBot),
       this,
       // TODO: fix in sdk
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -118,7 +118,7 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
   protected async botAdapter() {
     const me: User = await this.rawBot.api.route('/users/@me').get();
     const { id, username, name, is_bot } = me;
-    return this.getUser(id, username, name, me, is_bot);
+    return this.setAndGetUser(id, username, name, me, is_bot);
   }
 }
 

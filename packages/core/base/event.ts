@@ -4,12 +4,12 @@ import { IOctoMessage } from '../types/IMessage';
 import OctoGroup from './group';
 import OctoUser from './user';
 
-abstract class OctoEvent<RE = unknown> implements IOctoEvent {
+abstract class OctoEvent<RE = unknown, RU = unknown> implements IOctoEvent {
   public constructor(
     public rawEvent: RE,
     public id: string,
     public message: IOctoMessage,
-    public sender: OctoUser,
+    public sender: OctoUser<RU>,
     public bot: OctoBot,
     public groupId?: string,
   ) {}

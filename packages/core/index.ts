@@ -1,10 +1,12 @@
 import OctoBot from './base/bot';
 import OctoGroup from './base/group';
-import BaseModule from './base/module';
+import OctoUser from './base/user';
+import OctoEvent from './base/event';
 import Octo from './base/octo';
+import BaseModule from './base/module';
 import BaseService from './base/service';
-import Schedule from './decorators/schedule';
 
+import Schedule from './decorators/schedule';
 import Service from './decorators/service';
 import Trigger from './decorators/trigger';
 
@@ -15,6 +17,17 @@ export { IModuleInfo, IModuleMethodInfo } from './types/IModule';
 export { ITrigger, TriggerMethod } from './types/ITrigger';
 export { IOctoUser } from './types/IUser';
 
-export { Octo, BaseService, BaseModule, Service, OctoBot, Trigger, OctoGroup, Schedule };
+export {
+  Octo,
+  OctoBot,
+  OctoGroup,
+  OctoUser,
+  OctoEvent,
+  BaseService,
+  BaseModule,
+  Service,
+  Trigger,
+  Schedule,
+};
 
 export default Octo;

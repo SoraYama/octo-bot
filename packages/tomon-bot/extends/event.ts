@@ -43,8 +43,10 @@ export default class TomonEvent extends OctoEvent<TRawEvent> {
   }
 
   public getMentions(): OctoUser<User>[] {
-    const mentions = (this.rawEvent.d.mentions as unknown) as User[];
-    return (mentions || [])?.map((u) => this.bot.getUser(u.id));
+    const mentions = this.rawEvent.d.mentions;
+    return (mentions || [])?.map((user) =>
+      this.bot.setAndGetUser(user.id, user.username, user.name, user, user.is_bot),
+    );
   }
 
   public get group(): TomonGroup | null {
