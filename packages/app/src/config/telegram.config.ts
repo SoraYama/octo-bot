@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
+
+const botToken = dotenv.config().parsed?.TELEGRAM_TOKEN || '';
+
 export default {
-  botToken: '1496447575:AAE8xrru6VZ6zYaZG94uXwEQlzvBLxGu0GY',
+  botToken,
   superUserIds: [],
   bannedModules: [],
   enabledGroupIds: null,

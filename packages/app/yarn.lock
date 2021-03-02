@@ -144,6 +144,11 @@ diff@^4.0.1:
   resolved "https://registry.npm.alibaba-inc.com/diff/download/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha1-YPOuy4nV+uUgwRqhnvwruYKq3n0=
 
+dotenv@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.npm.alibaba-inc.com/dotenv/download/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha1-l+YZJZradQ7qPk6j4mvO6lQksWo=
+
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npm.alibaba-inc.com/dynamic-dedupe/download/dynamic-dedupe-0.3.0.tgz#06e44c223f5e4e94d78ef9db23a6515ce2f962a1"

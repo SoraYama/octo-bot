@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 
-const botToken = dotenv.config().parsed?.TOMON_TOKEN || '';
+const botToken = dotenv.config().parsed?.DISCORD_TOKEN || '';
 
 export default {
   botToken,
