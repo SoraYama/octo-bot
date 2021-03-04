@@ -28,5 +28,6 @@
   "bugs": {
     "url": "https://github.com/SoraYama/octo-bot/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "e775bd224c4aabd917995069e1fcaa1a162da5ee"
 }
