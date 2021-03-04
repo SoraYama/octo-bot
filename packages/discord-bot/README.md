@@ -1,11 +1,13 @@
 # `discord-bot`
 
-> TODO: description
-
 ## Usage
 
-```
-const discordBot = require('discord-bot');
+```ts
+import DiscordBot from '@octo-bot/discord-bot';
 
-// TODO: DEMONSTRATE API
+const ROOT = __dirname;
+
+const dcBot = new DiscordBot(ROOT);
+
+export default dcBot;
 ```
