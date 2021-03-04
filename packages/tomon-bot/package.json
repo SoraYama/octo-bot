@@ -4,5 +4,9 @@
   "dependencies": {
     "@octo-bot/core": "^1.0.1-alpha.0",
     "tomon-sdk": "^0.2.2"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }

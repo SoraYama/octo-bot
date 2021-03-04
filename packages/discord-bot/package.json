@@ -15,7 +15,8 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "http://registry.npm.alibaba-inc.com/"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "repository": {
     "type": "git",

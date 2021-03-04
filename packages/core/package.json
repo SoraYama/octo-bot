@@ -5,6 +5,10 @@
   "main": "index.ts",
   "author": "SoraYama",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "dependencies": {
     "fs-extra": "^9.0.1",
     "lodash": "^4.17.20",
