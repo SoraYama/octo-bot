@@ -1,8 +1,8 @@
 {
   "name": "@octo-bot/tomon-bot",
-  "version": "1.0.1-alpha.0",
+  "version": "1.0.1-alpha.1",
   "dependencies": {
-    "@octo-bot/core": "^1.0.1-alpha.0",
+    "@octo-bot/core": "^1.0.1-alpha.1",
     "tomon-sdk": "^0.2.2"
   },
   "publishConfig": {
