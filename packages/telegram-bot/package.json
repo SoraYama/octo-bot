@@ -1,6 +1,6 @@
 {
   "name": "@octo-bot/telegram-bot",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Telegram bot module for octo-bot",
   "keywords": [
     "telegram",
@@ -18,7 +18,7 @@
     "url": "git+https://github.com/SoraYama/octo-bot.git"
   },
   "dependencies": {
-    "@octo-bot/core": "^1.0.1-alpha.1",
+    "@octo-bot/core": "^1.0.3",
     "telegraf": "^4.1.0"
   },
   "publishConfig": {
