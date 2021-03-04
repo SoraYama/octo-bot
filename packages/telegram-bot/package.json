@@ -1,6 +1,6 @@
 {
   "name": "@octo-bot/telegram-bot",
-  "version": "1.0.1-alpha.1",
+  "version": "1.0.1",
   "description": "Telegram bot module for octo-bot",
   "keywords": [
     "telegram",
