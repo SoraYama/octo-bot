@@ -9,11 +9,16 @@
   ],
   "author": "SoraYama <sorayamahou@gmail.com>",
   "homepage": "https://github.com/SoraYama/octo-bot#readme",
-  "license": "MIT",
-  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
   "files": [
-    "lib"
+    "lib/**/*"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
@@ -21,9 +26,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SoraYama/octo-bot.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/SoraYama/octo-bot/issues"

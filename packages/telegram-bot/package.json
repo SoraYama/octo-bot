@@ -9,10 +9,15 @@
   ],
   "author": "SoraYama <sorayamahou@gmail.com>",
   "homepage": "https://github.com/SoraYama/octo-bot#readme",
-  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublish": "npm run build"
+  },
   "files": [
-    "lib"
+    "lib/**/*"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SoraYama/octo-bot.git"
