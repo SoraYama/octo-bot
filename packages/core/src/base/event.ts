@@ -1,4 +1,4 @@
-import { OctoBot } from '..';
+import OctoBot from '../base/bot';
 import { IOctoEvent } from '../types/IEvent';
 import { IOctoMessage } from '../types/IMessage';
 import OctoGroup from './group';

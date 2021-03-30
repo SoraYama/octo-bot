@@ -1,13 +1,13 @@
 import cron from 'node-cron';
 
 import { IOctoOptions } from '../types/ICore';
-import packageModule from '../package.json';
 import TypeHelper from '../utils/typeHelper';
 import OctoBot from './bot';
 import moduleInfo from './info';
 import ConfigLoader from '../loaders/configLoader';
 import ModuleLoader from '../loaders/moduleLoader';
 import ServiceLoader from '../loaders/serviceLoader';
+import pkgJson from '../utils/pkgJson';
 import schedule from './schedule';
 
 export default class Octo {
@@ -35,7 +35,7 @@ export default class Octo {
   }
 
   public static get version() {
-    return packageModule.version;
+    return pkgJson.version;
   }
 
   public static get configMap() {

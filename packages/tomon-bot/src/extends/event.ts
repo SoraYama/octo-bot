@@ -1,6 +1,4 @@
-import { IOctoMessage, SendingType } from '@octo-bot/core';
-import OctoEvent from '@octo-bot/core/base/event';
-import OctoUser from '@octo-bot/core/base/user';
+import { IOctoMessage, SendingType, OctoUser, OctoEvent } from '@octo-bot/core';
 import { User, WSPayload } from 'tomon-sdk/lib/types';
 import TomonBot from '..';
 import TomonGroup from './group';
