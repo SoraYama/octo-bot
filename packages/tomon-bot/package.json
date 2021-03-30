@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "npm run build"
+    "prepublish": "rm -rf lib && npm run build"
   },
   "files": [
     "lib/**/*"
