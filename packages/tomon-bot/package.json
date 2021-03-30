@@ -1,9 +1,9 @@
 {
   "name": "@octo-bot/tomon-bot",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Tomon bot module for octo-bot",
   "dependencies": {
-    "@octo-bot/core": "^1.0.5",
+    "@octo-bot/core": "^1.0.6",
     "tomon-sdk": "^0.2.2"
   },
   "publishConfig": {
