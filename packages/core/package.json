@@ -2,7 +2,7 @@
   "name": "@octo-bot/core",
   "version": "1.0.4",
   "description": "core for coto bot",
-  "author": "SoraYama",
+  "author": "SoraYama <sorayamahou@gmail.com>",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
@@ -17,6 +17,13 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoraYama/octo-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoraYama/octo-bot/issues"
+  },
   "dependencies": {
     "fs-extra": "^9.0.1",
     "lodash": "^4.17.20",
