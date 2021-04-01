@@ -1,6 +1,6 @@
 {
   "name": "@octo-bot/core",
-  "version": "1.0.6",
+  "version": "1.0.7-alpha.0",
   "description": "core for coto bot",
   "author": "SoraYama <sorayamahou@gmail.com>",
   "license": "MIT",
