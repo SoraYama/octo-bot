@@ -14,7 +14,7 @@ export default function Trigger(trigger: ITrigger | string): Function {
       methods: TypeHelper.isString(trigger) ? [TriggerMethod.Prefix] : trigger.methods,
       match: TypeHelper.isString(trigger) ? trigger : trigger.match,
       onlyToMe: TypeHelper.isString(trigger) ? false : trigger.onlyToMe || false,
-      helpText: TypeHelper.isString(trigger) ? 'To be completed' : trigger.helpText || '',
+      helpText: TypeHelper.isString(trigger) ? 'To be implemented' : trigger.helpText || '',
     };
     // decorate class
     if (props.length === 1) {
@@ -24,13 +24,9 @@ export default function Trigger(trigger: ITrigger | string): Function {
         );
       }
 
-      if (!TypeHelper.isString(trigger)) {
-        throw new Error(
-          `Trigger must be string when decorate a Module (module name: ${props[0].name})`,
-        );
-      }
       moduleInfo.setModuleInfo(props[0], null, {
         modulePath: handledTrigger.match,
+        helpText: handledTrigger.helpText,
       });
       return;
     }

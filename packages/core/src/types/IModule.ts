@@ -11,4 +11,5 @@ export interface IModuleInfo {
   // eslint-disable-next-line @typescript-eslint/ban-types
   clazz?: unknown;
   methodMap?: Map<string, IModuleMethodInfo>;
+  helpText?: string;
 }

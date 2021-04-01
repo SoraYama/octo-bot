@@ -7,6 +7,7 @@ interface IModuleInfoHelper {
   modulePath?: string;
   trigger?: ITrigger;
   schedule?: string;
+  helpText?: string;
 }
 
 class ModuleInfoManager {

@@ -138,15 +138,33 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       return;
     }
 
+    // handle help text
+    if (actionParam === 'help') {
+      const [methodName] = ramainParams;
+
+      if (!methodName) {
+        event.reply({ content: matchedModule.helpText });
+        return;
+      }
+
+      const matchedMethod = matchedModule.methodMap.get(methodName);
+
+      if (!matchedMethod || !matchedMethod.trigger?.helpText) {
+        event.reply({ content: matchedModule.helpText });
+        this.logger.debug(
+          `Module ${matchedModule.name} method ${methodName} does not exists or missing help text`,
+        );
+        return;
+      }
+
+      event.reply({ content: matchedMethod?.trigger?.helpText });
+      return;
+    }
+
     let matchedMethodName: string | null = null;
 
     for (const method of matchedModule.methodMap.values()) {
       const { methodName, trigger } = method;
-
-      if (actionParam.startsWith('help') && trigger?.helpText) {
-        event.reply({ content: trigger?.helpText });
-        return;
-      }
 
       const methods = trigger?.methods || [];
       const isTriggerMatched = methods.some((m) =>
