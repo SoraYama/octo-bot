@@ -15,7 +15,7 @@ export default function configureLog(ROOT: string) {
     categories: {
       default: {
         appenders: ['main', 'console'],
-        level: 'debug',
+        level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
       },
     },
   });
