@@ -1,6 +1,6 @@
 {
   "name": "@octo-bot/discord-bot",
-  "version": "1.0.7-alpha.0",
+  "version": "1.0.7-alpha.1",
   "description": "Discord bot module for octo-bot",
   "keywords": [
     "discord",
@@ -31,7 +31,7 @@
     "url": "https://github.com/SoraYama/octo-bot/issues"
   },
   "dependencies": {
-    "@octo-bot/core": "^1.0.7-alpha.0",
+    "@octo-bot/core": "^1.0.7-alpha.1",
     "discord.js": "^12.5.1"
   },
   "gitHead": "e775bd224c4aabd917995069e1fcaa1a162da5ee"

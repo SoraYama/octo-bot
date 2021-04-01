@@ -1,16 +1,16 @@
 {
   "name": "@octo-bot/app",
-  "version": "1.0.7-alpha.0",
+  "version": "1.0.7-alpha.1",
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "ts-node-dev src/index.ts"
   },
   "private": true,
   "dependencies": {
-    "@octo-bot/core": "^1.0.7-alpha.0",
-    "@octo-bot/discord-bot": "^1.0.7-alpha.0",
-    "@octo-bot/telegram-bot": "^1.0.7-alpha.0",
-    "@octo-bot/tomon-bot": "^1.0.7-alpha.0",
+    "@octo-bot/core": "^1.0.7-alpha.1",
+    "@octo-bot/discord-bot": "^1.0.7-alpha.1",
+    "@octo-bot/telegram-bot": "^1.0.7-alpha.1",
+    "@octo-bot/tomon-bot": "^1.0.7-alpha.1",
     "dotenv": "^8.2.0",
     "socks-proxy-agent": "^5.0.0",
     "telegraf": "^4.1.0",
