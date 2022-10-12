@@ -1,4 +1,12 @@
-import { BaseModule, Schedule, SendingType, Service, Trigger, TriggerMethod } from '@octo-bot/core';
+import {
+  BaseModule,
+  Schedule,
+  SendingType,
+  Service,
+  Trigger,
+  TriggerMethod,
+} from '@octo-bot/core';
+
 import EchoService from '../service/echo.service';
 
 @Trigger('/echo')
@@ -6,9 +14,13 @@ class EchoModule extends BaseModule {
   @Service('echo')
   private echoService!: EchoService;
 
-  @Trigger({ match: 'test', methods: [TriggerMethod.Prefix], helpText: 'test bot' })
+  @Trigger({
+    match: 'test',
+    methods: [TriggerMethod.Prefix],
+    helpText: 'test bot',
+    platforms: ['telegram'],
+  })
   public async echo() {
-    this.bot.rawBot;
     await this.event.reply({
       content: this.echoService.getRemain(),
     });

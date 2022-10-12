@@ -8,6 +8,7 @@ export enum TriggerMethod {
 export interface ITrigger {
   methods: TriggerMethod[];
   match: string;
+  platforms?: string[];
   onlyToMe?: boolean;
   helpText?: string;
 }

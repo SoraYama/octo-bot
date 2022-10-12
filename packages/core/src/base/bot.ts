@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
+import { Logger } from 'log4js';
+
 import { IOctoBotConfig } from '../types/ICore';
 import { IOctoMessage, ISendOptions } from '../types/IMessage';
 import { IModuleInfo } from '../types/IModule';
@@ -16,6 +18,8 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   private _config: IOctoBotConfig = defaultConfig;
 
+  private _logger: Logger | null = null;
+
   public get config() {
     return this._config;
   }
@@ -27,7 +31,14 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
   public constructor(public ROOT: string, public platformName: string) {}
 
   public get logger() {
-    return configureLog(this.ROOT).getLogger(this.platformName);
+    if (this._logger) {
+      return this._logger;
+    }
+
+    const logger = configureLog(this.ROOT).getLogger(this.platformName);
+    this._logger = logger;
+
+    return logger;
   }
 
   public get users() {
@@ -80,6 +91,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     if (event.sender.id === asUser.id) {
       return;
     }
+
     if (event.sender.isBot && ignoreBotMsg) {
       return;
     }
@@ -112,12 +124,12 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       return;
     }
 
-    const [rootPath, actionParam, ...ramainParams] = event.params;
+    const [moduleRootParam, actionParam, ...remainParams] = event.params;
 
     let matchedModule: IModuleInfo | null = null;
 
     for (const mod of moduleInfo.allModuleInfo) {
-      if (mod.modulePath === rootPath) {
+      if (mod.modulePath === moduleRootParam) {
         this.logger.debug(`Found module for message ${content}: ${mod.name}`);
         matchedModule = mod;
       }
@@ -140,24 +152,38 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
     // handle help text
     if (actionParam === 'help') {
-      const [methodName] = ramainParams;
+      const [targetMethod] = remainParams;
 
-      if (!methodName) {
+      if (!targetMethod) {
         event.reply({ content: matchedModule.helpText });
         return;
       }
 
-      const matchedMethod = matchedModule.methodMap.get(methodName);
+      const matchedMethod = matchedModule.methodMap.get(targetMethod);
 
-      if (!matchedMethod || !matchedMethod.trigger?.helpText) {
+      let trigger = matchedMethod?.trigger;
+
+      if (!trigger) {
+        for (const method of matchedModule.methodMap.values()) {
+          if (method.trigger?.match === targetMethod) {
+            trigger = method.trigger;
+            this.logger.debug(`replaced ${method.methodName} trigger by match word`);
+          }
+        }
+      }
+
+      if (!trigger?.helpText) {
         event.reply({ content: matchedModule.helpText });
+
         this.logger.debug(
-          `Module ${matchedModule.name} method ${methodName} does not exists or missing help text`,
+          `Module ${matchedModule.name} method ${targetMethod} does not exists or missing help text`,
         );
         return;
       }
 
-      event.reply({ content: matchedMethod?.trigger?.helpText });
+      this.logger.debug(`hit method helping text ${trigger.helpText}`);
+
+      event.reply({ content: trigger.helpText });
       return;
     }
 
@@ -167,8 +193,19 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
       const { methodName, trigger } = method;
 
       const methods = trigger?.methods || [];
+
+      if (
+        method.trigger?.platforms?.length &&
+        !method.trigger?.platforms.includes(this.platformName)
+      ) {
+        this.logger.debug(
+          `Current platform mismatched with method trigger whitelist platform ${method.trigger?.platforms}`,
+        );
+        return;
+      }
+
       const isTriggerMatched = methods.some((m) =>
-        triggerMethod([actionParam, ...ramainParams].join(' '), trigger?.match || '', m),
+        triggerMethod([actionParam, ...remainParams].join(' '), trigger?.match || '', m),
       );
 
       if (isTriggerMatched) {

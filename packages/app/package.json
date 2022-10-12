@@ -3,7 +3,7 @@
   "version": "1.0.7-alpha.1",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "ts-node-dev src/index.ts"
+    "dev": "NODE_ENV=development ts-node-dev src/index.ts"
   },
   "private": true,
   "dependencies": {

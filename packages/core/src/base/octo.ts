@@ -1,13 +1,14 @@
 import cron from 'node-cron';
 
-import { IOctoOptions } from '../types/ICore';
-import TypeHelper from '../utils/typeHelper';
-import OctoBot from './bot';
-import moduleInfo from './info';
 import ConfigLoader from '../loaders/configLoader';
 import ModuleLoader from '../loaders/moduleLoader';
 import ServiceLoader from '../loaders/serviceLoader';
+import { IOctoOptions } from '../types/ICore';
 import pkgJson from '../utils/pkgJson';
+import TypeHelper from '../utils/typeHelper';
+import OctoBot from './bot';
+import moduleInfo from './info';
+import configLogger from './logger';
 import schedule from './schedule';
 
 export default class Octo {
@@ -49,6 +50,10 @@ export default class Octo {
   public serviceLoader: ServiceLoader;
 
   public moduleLoader: ModuleLoader;
+
+  public get logger() {
+    return configLogger(this.options.ROOT).getLogger('Octo');
+  }
 
   private env: string;
 
