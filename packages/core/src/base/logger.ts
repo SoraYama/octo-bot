@@ -3,7 +3,7 @@ import path from 'path';
 
 let configuredLog4js: log4js.Log4js | null = null;
 
-export default (ROOT: string) => {
+const configureLog = (ROOT: string) => {
   if (!configuredLog4js) {
     configuredLog4js = log4js.configure({
       appenders: {
@@ -26,3 +26,5 @@ export default (ROOT: string) => {
 
   return configuredLog4js;
 };
+
+export default configureLog;

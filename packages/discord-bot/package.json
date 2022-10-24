@@ -11,7 +11,7 @@
   "homepage": "https://github.com/SoraYama/octo-bot#readme",
   "scripts": {
     "build": "tsc",
-    "prepublish": "rm -rf lib && npm run build"
+    "prepublish": "rm -rf lib && yarn run build"
   },
   "files": [
     "lib/**/*"

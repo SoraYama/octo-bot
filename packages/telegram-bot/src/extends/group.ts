@@ -1,8 +1,10 @@
-import { OctoGroup, OctoUser } from '@octo-bot/core';
+import { Telegraf } from 'telegraf';
+import TelegrafContext from 'telegraf/typings/context';
 import { User } from 'telegraf/typings/telegram-types';
-import TelegramBot from '..';
 
-export default class TgGroup extends OctoGroup<TelegramBot> {
+import { OctoGroup, OctoUser } from '@octo-bot/core';
+
+export default class TgGroup extends OctoGroup<TelegrafContext, Telegraf<TelegrafContext>, User> {
   public async getOwnerId(): Promise<string> {
     const adminList = await this.bot.rawBot.telegram.getChatAdministrators(this.groupId);
     return adminList.find((admin) => admin.status === 'creator')!.user.id.toString();

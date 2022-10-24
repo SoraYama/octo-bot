@@ -1,6 +1,14 @@
-import Octo, { IOctoMessage, ISendOptions, OctoBot, SendingType } from '@octo-bot/core';
 import RawBot from 'tomon-sdk';
 import { Guild, User, WSPayload } from 'tomon-sdk/lib/types';
+
+import Octo, {
+  IOctoMessage,
+  ISendOptions,
+  OctoBot,
+  OctoUser,
+  SendingType,
+} from '@octo-bot/core';
+
 import TomonEvent from './extends/event';
 import TomonGroup from './extends/group';
 
@@ -22,6 +30,11 @@ class TomonBot extends OctoBot<WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>, R
     const groups: Guild[] = await this.rawBot.api.route('/users/@me/guilds').get();
     this.logger.debug('fetched guilds: ', groups);
     return groups.map((g) => new TomonGroup(g.id, this));
+  }
+
+  public userAdapter(rawUser: User): OctoUser<User> {
+    const { id, username, name, is_bot } = rawUser;
+    return this.setAndGetUser(id, username, name, rawUser, is_bot);
   }
 
   public async send(msg: IOctoMessage, options?: ISendOptions) {

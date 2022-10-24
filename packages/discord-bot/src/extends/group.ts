@@ -1,7 +1,8 @@
-import { OctoGroup } from '@octo-bot/core';
-import DiscordBot from '..';
+import { Client, Message, User } from 'discord.js';
 
-class DiscordGroup extends OctoGroup<DiscordBot> {
+import { OctoGroup } from '@octo-bot/core';
+
+class DiscordGroup extends OctoGroup<Message, Client, User> {
   public async getGuildById() {
     return await this.bot.rawBot.guilds.fetch(this.groupId);
   }
@@ -14,7 +15,7 @@ class DiscordGroup extends OctoGroup<DiscordBot> {
   public async getGroupMember() {
     const guild = await this.getGuildById();
     const members = await guild.members.fetch();
-    return members.array().map((member) => this.bot.userAdapter(member.user, member.nickname));
+    return members.array().map((member) => this.bot.userAdapter(member.user));
   }
 
   public async getGroupName() {

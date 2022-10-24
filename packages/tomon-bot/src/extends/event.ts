@@ -1,9 +1,11 @@
-import { IOctoMessage, SendingType, OctoUser, OctoEvent } from '@octo-bot/core';
 import { User, WSPayload } from 'tomon-sdk/lib/types';
-import TomonBot from '..';
+
+import { IOctoMessage, OctoEvent, OctoUser, SendingType } from '@octo-bot/core';
+
+import TomonBot from '../';
 import TomonGroup from './group';
 
-type TRawEvent = WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>;
+export type TRawEvent = WSPayload<'MESSAGE_CREATE' | 'MESSAGE_UPDATE'>;
 
 export default class TomonEvent extends OctoEvent<TRawEvent> {
   public constructor(

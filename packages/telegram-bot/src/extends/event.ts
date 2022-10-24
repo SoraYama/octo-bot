@@ -1,10 +1,13 @@
-import { IOctoMessage, OctoUser, OctoEvent } from '@octo-bot/core';
+import { Telegraf } from 'telegraf';
 import TelegrafContext from 'telegraf/typings/context';
 import { User } from 'telegraf/typings/telegram-types';
-import TelegramBot from '..';
+
+import { IOctoMessage, OctoEvent, OctoUser } from '@octo-bot/core';
+
+import TelegramBot from '../';
 import TgGroup from './group';
 
-class TgEvent extends OctoEvent<TelegrafContext, User> {
+class TgEvent extends OctoEvent<TelegrafContext, Telegraf<TelegrafContext>, User> {
   public constructor(
     public rawEvent: TelegrafContext,
     public id: string,

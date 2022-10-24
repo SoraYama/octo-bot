@@ -1,8 +1,10 @@
-import { OctoGroup, OctoUser } from '@octo-bot/core';
-import { Guild } from 'tomon-sdk';
-import TomonBot from '..';
+import RawBot, { Guild } from 'tomon-sdk';
 
-export default class TomonGroup extends OctoGroup<TomonBot> {
+import { OctoGroup, OctoUser } from '@octo-bot/core';
+
+import { TRawEvent } from './event';
+
+export default class TomonGroup extends OctoGroup<TRawEvent, RawBot> {
   public async getGroup(): Promise<Guild> {
     return await this.bot.rawBot.api.route(`/guilds/${this.groupId}`).get();
   }

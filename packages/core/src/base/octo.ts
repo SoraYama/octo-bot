@@ -1,4 +1,5 @@
 import cron from 'node-cron';
+import { createClient } from 'redis';
 
 import ConfigLoader from '../loaders/configLoader';
 import ModuleLoader from '../loaders/moduleLoader';
@@ -51,6 +52,8 @@ export default class Octo {
 
   public moduleLoader: ModuleLoader;
 
+  public redisClient!: ReturnType<typeof createClient>;
+
   public get logger() {
     return configLogger(this.options.ROOT).getLogger('Octo');
   }
@@ -79,12 +82,46 @@ export default class Octo {
     this.serviceLoader = new ServiceLoader(this.options.ROOT);
   }
 
+  private async _connectRedis() {
+    const { redis } = this.options;
+
+    if (!redis) {
+      this.logger.info('[redis] missing redis config, skip connecting');
+      return;
+    }
+
+    const { username = '', password = '', host = 'localhost', port = '6379', database } = redis;
+    const redisURL = new URL(`redis://${host}:${port}/${database}`);
+
+    if (username) {
+      redisURL.username = username;
+    }
+
+    if (password) {
+      redisURL.password = password;
+    }
+
+    const client = createClient({
+      url: redisURL.toString(),
+    });
+
+    await client.connect();
+
+    this.redisClient = client;
+  }
+
   public async start() {
+    this.logger.info('[core] init loaders...');
     await Promise.all(
       [this.configLoader, this.moduleLoader, this.serviceLoader].map((loader) =>
         loader.loadResolvedDir(),
       ),
     );
+    this.logger.info('[core] loaders init complete');
+
+    this.logger.info('[core] connecting redis...');
+    await this._connectRedis();
+    this.logger.info('[core] redis connected');
 
     this.bots.forEach((bot) => {
       const botConfig = this.configLoader.configMap.get(bot.platformName);
@@ -92,6 +129,8 @@ export default class Octo {
       if (!botConfig) {
         throw new Error(`Missing platform: ${bot.platformName} bot config`);
       }
+
+      bot.redisClient = this.redisClient;
 
       bot.config = botConfig;
 

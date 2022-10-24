@@ -1,8 +1,8 @@
 import OctoBot from './bot';
 import OctoUser from './user';
 
-export default abstract class OctoGroup<Bot extends OctoBot = OctoBot> {
-  public constructor(public groupId: string, public bot: Bot) {}
+export default abstract class OctoGroup<RE = unknown, RB = unknown, RU = unknown> {
+  public constructor(public groupId: string, public bot: OctoBot<RE, RB, RU>) {}
 
   public abstract getOwnerId(): Promise<string>;
 

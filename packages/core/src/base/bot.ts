@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { Logger } from 'log4js';
+import { createClient } from 'redis';
 
 import { IOctoBotConfig } from '../types/ICore';
 import { IOctoMessage, ISendOptions } from '../types/IMessage';
@@ -19,6 +20,8 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
   private _config: IOctoBotConfig = defaultConfig;
 
   private _logger: Logger | null = null;
+
+  public redisClient!: ReturnType<typeof createClient>;
 
   public get config() {
     return this._config;
@@ -66,7 +69,15 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
     rawUser: RU,
     isBot: boolean,
   ) {
-    const user = new OctoUser(id, userName, nickName, rawUser, isBot);
+    const user: OctoUser<RU> = new OctoUser(
+      this,
+      id,
+      userName,
+      nickName,
+      this.platformName,
+      rawUser,
+      isBot,
+    );
     this._userMap.set(id, user);
 
     return user;
@@ -76,7 +87,9 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   protected abstract eventAdapter(rawEvent: RE): OctoEvent;
 
-  protected abstract botAdapter(rawBot: RB): Promise<OctoUser>;
+  protected abstract botAdapter(rawBot: RB): Promise<OctoUser<RU>>;
+
+  public abstract userAdapter(rawUser: RU): OctoUser<RU>;
 
   public abstract send(msg: IOctoMessage, options?: ISendOptions): Promise<unknown>;
 

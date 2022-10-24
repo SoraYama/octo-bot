@@ -1,7 +1,15 @@
 import { Telegraf } from 'telegraf';
 import TelegrafContext from 'telegraf/typings/context';
 import { User } from 'telegraf/typings/telegram-types';
-import { IOctoMessage, ISendOptions, OctoBot, OctoEvent, OctoUser } from '@octo-bot/core';
+
+import {
+  IOctoMessage,
+  ISendOptions,
+  OctoBot,
+  OctoEvent,
+  OctoUser,
+} from '@octo-bot/core';
+
 import TgEvent from './extends/event';
 import TgGroup from './extends/group';
 
@@ -67,7 +75,9 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
     return Array.from(this.enteredGroupMap.values());
   }
 
-  protected eventAdapter(rawEvent: TelegrafContext): OctoEvent<TelegrafContext, User> {
+  protected eventAdapter(
+    rawEvent: TelegrafContext,
+  ): OctoEvent<TelegrafContext, Telegraf<TelegrafContext>, User> {
     const { message } = rawEvent;
     if (!message) {
       throw new Error('No message in Telegraf Context');

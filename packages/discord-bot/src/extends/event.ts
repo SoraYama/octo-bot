@@ -1,9 +1,11 @@
+import { Client, Message, User } from 'discord.js';
+
 import { IOctoMessage, OctoEvent, OctoUser } from '@octo-bot/core';
-import { Message, User } from 'discord.js';
-import DiscordBot from '..';
+
+import DiscordBot from '../';
 import DiscordGroup from './group';
 
-class DiscordEvent extends OctoEvent<Message, User> {
+class DiscordEvent extends OctoEvent<Message, Client, User> {
   public constructor(
     public rawEvent: Message,
     public id: string,

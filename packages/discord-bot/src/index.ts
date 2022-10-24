@@ -1,16 +1,14 @@
+import { Client, ClientOptions, Message, User } from 'discord.js';
+
 import { IOctoMessage, ISendOptions, OctoBot, OctoEvent } from '@octo-bot/core';
-import Discord, { Message, User } from 'discord.js';
+
 import DiscordEvent from './extends/event';
 import DiscordGroup from './extends/group';
 
-class DiscordBot extends OctoBot<Discord.Message, Discord.Client, Discord.User> {
-  private _rawBot: Discord.Client | null = null;
+class DiscordBot extends OctoBot<Message, Client, User> {
+  private _rawBot: Client | null = null;
 
-  public constructor(
-    ROOT: string,
-    platformName: string,
-    private _clientOptions?: Discord.ClientOptions,
-  ) {
+  public constructor(ROOT: string, platformName: string, private _clientOptions?: ClientOptions) {
     super(ROOT, platformName);
   }
 
@@ -26,7 +24,7 @@ class DiscordBot extends OctoBot<Discord.Message, Discord.Client, Discord.User> 
       this.logger.fatal('Discord bot token is required in config file');
       return;
     }
-    this._rawBot = new Discord.Client(this._clientOptions);
+    this._rawBot = new Client(this._clientOptions);
     this._rawBot.on('message', (message) => {
       if (!message.content) {
         this.logger.warn('Msg has no content', message);
@@ -70,7 +68,7 @@ class DiscordBot extends OctoBot<Discord.Message, Discord.Client, Discord.User> 
     return this.setAndGetUser(id, username, '', this.rawBot.user, true);
   }
 
-  public eventAdapter(message: Message): OctoEvent<Message, User> {
+  public eventAdapter(message: Message): OctoEvent<Message, Client, User> {
     return new DiscordEvent(
       message,
       message.id,
@@ -91,7 +89,7 @@ class DiscordBot extends OctoBot<Discord.Message, Discord.Client, Discord.User> 
     return this.setAndGetUser(id, username || '', nickname || '', user, bot);
   }
 
-  public async getGroups() {
+  public async getGroups(): Promise<DiscordGroup[]> {
     return this.rawBot.guilds.cache.array().map((guild) => new DiscordGroup(guild.id, this));
   }
 }
