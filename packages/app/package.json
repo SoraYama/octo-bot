@@ -11,6 +11,7 @@
     "@octo-bot/discord-bot": "^1.0.7-alpha.1",
     "@octo-bot/telegram-bot": "^1.0.7-alpha.1",
     "@octo-bot/tomon-bot": "^1.0.7-alpha.1",
+    "@octo-bot/plugin-user-control": "^1.0.7-alpha.1",
     "dotenv": "^8.2.0",
     "socks-proxy-agent": "^5.0.0",
     "telegraf": "^4.1.0",

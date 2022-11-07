@@ -9,10 +9,19 @@
       "request": "launch",
       "name": "Launch Octo App",
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run-script", "dev"],
       "cwd": "${workspaceFolder}/packages/app"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Build and Launch Octo App",
+      "sourceMaps": true,
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev"],
+      "cwd": "${workspaceFolder}/packages/app",
+      "preLaunchTask": "npm: build"
     }
   ]
 }

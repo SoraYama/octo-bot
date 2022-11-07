@@ -11,19 +11,22 @@
   "homepage": "https://github.com/SoraYama/octo-bot#readme",
   "scripts": {
     "build": "tsc",
+    "start": "tsc --watch",
     "prepublish": "rm -rf lib && yarn run build"
   },
   "files": [
     "lib/**/*"
   ],
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SoraYama/octo-bot.git"
   },
   "dependencies": {
-    "@octo-bot/core": "^1.0.7-alpha.1"
+    "@octo-bot/core": "^1.0.7-alpha.1",
+    "@octo-bot/telegram-bot": "^1.0.7-alpha.1",
+    "@octo-bot/discord-bot": "^1.0.7-alpha.1",
+    "@octo-bot/tomon-bot": "^1.0.7-alpha.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

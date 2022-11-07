@@ -3,6 +3,7 @@ import { createClient } from 'redis';
 
 import ConfigLoader from '../loaders/configLoader';
 import ModuleLoader from '../loaders/moduleLoader';
+import PluginLoader from '../loaders/pluginLoader';
 import ServiceLoader from '../loaders/serviceLoader';
 import { IOctoOptions } from '../types/ICore';
 import pkgJson from '../utils/pkgJson';
@@ -52,6 +53,8 @@ export default class Octo {
 
   public moduleLoader: ModuleLoader;
 
+  public pluginLoader: PluginLoader;
+
   public redisClient!: ReturnType<typeof createClient>;
 
   public get logger() {
@@ -61,7 +64,7 @@ export default class Octo {
   private env: string;
 
   private constructor(private options: IOctoOptions) {
-    const { ROOT, bots, env } = options;
+    const { ROOT, bots, env, plugins = [] } = options;
     if (!TypeHelper.isString(ROOT)) {
       throw new Error(`ROOT must be string passed to Octo, now ${ROOT}`);
     }
@@ -80,6 +83,7 @@ export default class Octo {
     this.configLoader = new ConfigLoader(this.options.ROOT);
     this.moduleLoader = new ModuleLoader(this.options.ROOT);
     this.serviceLoader = new ServiceLoader(this.options.ROOT);
+    this.pluginLoader = new PluginLoader(this.options.ROOT, plugins);
   }
 
   private async _connectRedis() {
@@ -112,7 +116,7 @@ export default class Octo {
   public async start() {
     this.logger.info('[core] init loaders...');
     await Promise.all(
-      [this.configLoader, this.moduleLoader, this.serviceLoader].map((loader) =>
+      [this.configLoader, this.moduleLoader, this.serviceLoader, this.pluginLoader].map((loader) =>
         loader.loadResolvedDir(),
       ),
     );

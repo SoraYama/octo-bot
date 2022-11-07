@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 import TelegrafContext from 'telegraf/typings/context';
-import { User } from 'telegraf/typings/telegram-types';
+import { User } from 'telegraf/typings/core/types/typegram';
 
 import { OctoGroup, OctoUser } from '@octo-bot/core';
 

@@ -13,6 +13,7 @@ export interface IOctoOptions {
   bots: OctoBot[];
   env?: string;
   redis?: IRedisConfig;
+  plugins?: string[];
 }
 
 export interface IOctoBotConfig {

@@ -1,5 +1,5 @@
-import BaseLoader from './baseLoader';
 import { IOctoBotConfig } from '../types/ICore';
+import BaseLoader from './baseLoader';
 import { parseFileName } from './utils';
 
 export default class ConfigLoader extends BaseLoader {
@@ -11,6 +11,9 @@ export default class ConfigLoader extends BaseLoader {
 
   protected async loadFn(fileName: string) {
     const { name: configName, suffix, type } = parseFileName(fileName);
+
+    this.logger.debug(`loading config ${configName}`);
+
     if (suffix.length > 0 && type !== this.loadPath) {
       return;
     }

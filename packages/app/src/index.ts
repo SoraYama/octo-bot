@@ -38,6 +38,7 @@ const instance = Octo.getInstance({
     port: REDIS_PORT,
     database: REDIS_DB,
   },
+  plugins: ['@octo-bot/plugin-user-control'],
 });
 
 instance.start();

@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "start": "tsc --watch",
     "prepublish": "rm -rf lib && yarn run build"
   },
   "files": [

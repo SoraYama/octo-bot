@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "build": "lerna run build --stream"
+    "build": "lerna run build --stream",
+    "start": "lerna run start --parallel"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.2",

@@ -1,6 +1,6 @@
+import BaseService from '../base/service';
 /* eslint-disable @typescript-eslint/ban-types */
 import BaseLoader from './baseLoader';
-import BaseService from '../base/service';
 import { parseFileName } from './utils';
 
 export default class ServiceLoader extends BaseLoader {
@@ -12,6 +12,8 @@ export default class ServiceLoader extends BaseLoader {
 
   protected async loadFn(fileName: string) {
     const { name: clazzName, type, suffix } = parseFileName(fileName);
+
+    this.logger.debug(`loading service ${clazzName}`);
 
     if (suffix.length === 0 && type === this.loadPath) {
       const clazz: Function = (await import(fileName)).default;

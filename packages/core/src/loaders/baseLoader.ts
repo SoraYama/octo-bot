@@ -1,4 +1,5 @@
 import path from 'path';
+
 import configureLog from '../base/logger';
 import { loadDir } from './utils';
 
@@ -7,7 +8,7 @@ abstract class BaseLoader {
 
   public constructor(
     public ROOT: string,
-    protected loadPath: string,
+    protected loadPath?: string,
     protected ignorePaths: string[] = [],
   ) {
     this.logger = configureLog(ROOT).getLogger('loader');
@@ -15,6 +16,10 @@ abstract class BaseLoader {
   }
 
   public async loadResolvedDir() {
+    if (!this.loadPath) {
+      this.logger.warn(`loader ${this.constructor.name} has no load path`);
+      return;
+    }
     await loadDir(this.getResolvedPath(this.loadPath), this.loadFn.bind(this), this.ignorePaths);
   }
 
