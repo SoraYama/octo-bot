@@ -86,8 +86,7 @@ export default class Octo {
     const { redis } = this.options;
 
     if (!redis) {
-      this.logger.info('[redis] missing redis config, skip connecting');
-      return;
+      throw new Error('[redis] redis config is required');
     }
 
     const { username = '', password = '', host = 'localhost', port = '6379', database } = redis;

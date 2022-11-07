@@ -91,7 +91,7 @@ export default abstract class OctoBot<RE = unknown, RB = unknown, RU = unknown> 
 
   public abstract userAdapter(rawUser: RU): OctoUser<RU>;
 
-  public abstract send(msg: IOctoMessage, options?: ISendOptions): Promise<unknown>;
+  public abstract send(msg: IOctoMessage, options?: ISendOptions): Promise<void>;
 
   public abstract getGroups(): Promise<OctoGroup[]>;
 

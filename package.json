@@ -2,7 +2,8 @@
   "name": "octo-bot",
   "private": true,
   "scripts": {
-    "init": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build --stream"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.2",
@@ -14,5 +15,8 @@
     "lerna": "^3.22.1",
     "lint-staged": "^10.5.2",
     "typescript": "^4.1.2"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }

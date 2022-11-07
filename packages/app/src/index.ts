@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import path from 'path';
 import SocksProxyAgent from 'socks-proxy-agent';
 
@@ -7,6 +8,7 @@ import Octo from '@octo-bot/core';
 import TelegramBot from '@octo-bot/telegram-bot';
 
 const agent = SocksProxyAgent('socks://127.0.0.1:1080');
+const { REDIS_HOST, REDIS_PORT, REDIS_DB } = dotenv.config().parsed || {};
 
 // const tomonOptions = {
 //   axiosConfig: {
@@ -31,6 +33,11 @@ const telegramBot = new TelegramBot(ROOT, 'telegram', {
 const instance = Octo.getInstance({
   bots: [telegramBot],
   ROOT,
+  redis: {
+    host: REDIS_HOST,
+    port: REDIS_PORT,
+    database: REDIS_DB,
+  },
 });
 
 instance.start();

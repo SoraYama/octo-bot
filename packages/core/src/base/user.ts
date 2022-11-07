@@ -48,6 +48,7 @@ class OctoUser<RU = unknown> implements IOctoUser<RU> {
     const dataStr = await this.bot.redisClient.get(this._redisKey);
 
     if (!dataStr) {
+      this._save();
       return;
     }
 

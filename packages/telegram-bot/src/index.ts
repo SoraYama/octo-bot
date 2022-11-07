@@ -1,6 +1,6 @@
 import { Telegraf } from 'telegraf';
 import TelegrafContext from 'telegraf/typings/context';
-import { User } from 'telegraf/typings/telegram-types';
+import { User } from 'telegraf/typings/core/types/typegram';
 
 import {
   IOctoMessage,
@@ -38,7 +38,7 @@ class TelegramBot extends OctoBot<TelegrafContext, Telegraf<TelegrafContext>, Us
     return this.setAndGetUser(
       String(id),
       username || '',
-      `${first_name}${last_name}`,
+      `${first_name || ''}${last_name || ''}`,
       user,
       is_bot,
     );
