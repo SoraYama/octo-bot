@@ -16,12 +16,18 @@ export default class PluginLoader extends BaseLoader {
   }
 
   public async loadResolvedDir(): Promise<void> {
+    if (!this._pluginNames.length) {
+      return;
+    }
+
+    this.logger.info('resolve plugins', this._pluginNames);
+
     const pluginDirs = this._pluginNames.map((name) => {
       const installedPluginDir = require.resolve(name);
       return path.resolve(installedPluginDir, '..');
     });
 
-    this.logger.debug('detected plugin dir: ', pluginDirs);
+    this.logger.debug('plugin dirs: ', pluginDirs);
 
     await Promise.all(
       pluginDirs.map((dir) =>
@@ -40,7 +46,7 @@ export default class PluginLoader extends BaseLoader {
     const { name: clazzName, type, suffix } = parseFileName(fileName);
 
     if (suffix.length === 0 && PluginLoader.PLUGIN_LOAD_DIR_NAMES.includes(type)) {
-      this.logger.debug(`loading plugin ${clazzName} ${type}`);
+      this.logger.info(`loading plugin ${clazzName} ${type}`);
       const clazz: Function = (await import(fileName)).default;
 
       if (clazz && clazz.prototype) {

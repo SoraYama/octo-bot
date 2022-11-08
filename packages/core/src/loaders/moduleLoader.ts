@@ -11,7 +11,7 @@ export default class ModuleLoader extends BaseLoader {
   protected async loadFn(fileName: string) {
     const { name: clazzName, type, suffix } = parseFileName(fileName);
 
-    this.logger.debug(`loading module ${clazzName}`);
+    this.logger.info(`loading module ${clazzName}`);
 
     if (suffix.length === 0 && type === this.loadPath) {
       // eslint-disable-next-line @typescript-eslint/ban-types

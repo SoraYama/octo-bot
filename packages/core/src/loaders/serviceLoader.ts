@@ -13,7 +13,7 @@ export default class ServiceLoader extends BaseLoader {
   protected async loadFn(fileName: string) {
     const { name: clazzName, type, suffix } = parseFileName(fileName);
 
-    this.logger.debug(`loading service ${clazzName}`);
+    this.logger.info(`loading service ${clazzName}`);
 
     if (suffix.length === 0 && type === this.loadPath) {
       const clazz: Function = (await import(fileName)).default;

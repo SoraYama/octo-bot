@@ -12,7 +12,7 @@ export default class ConfigLoader extends BaseLoader {
   protected async loadFn(fileName: string) {
     const { name: configName, suffix, type } = parseFileName(fileName);
 
-    this.logger.debug(`loading config ${configName}`);
+    this.logger.info(`loading config ${configName}`);
 
     if (suffix.length > 0 && type !== this.loadPath) {
       return;

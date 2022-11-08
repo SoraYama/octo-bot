@@ -21,6 +21,8 @@ class EchoModule extends BaseModule {
     platforms: ['telegram'],
   })
   public async echo() {
+    this.bot.logger.info('enter echo');
+
     await this.event.reply({
       content: this.echoService.getRemain(),
     });
