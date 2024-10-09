@@ -16,6 +16,7 @@ export enum SendingType {
 
 export interface ISendOptions {
   type: SendingType;
+  replyMsgId?: string;
   userId?: string;
   channelOrGroupId?: string;
   broadcastIds?: string[];

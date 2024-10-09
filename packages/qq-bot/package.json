@@ -1,0 +1,38 @@
+{
+  "name": "@octo-bot/qq-bot",
+  "version": "1.0.7",
+  "description": "QQ bot module for octo-bot",
+  "keywords": [
+    "qq",
+    "octo",
+    "bot"
+  ],
+  "author": "SoraYama <sorayamahou@gmail.com>",
+  "homepage": "https://github.com/SoraYama/octo-bot#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc --watch",
+    "prepublish": "rm -rf lib && yarn run build"
+  },
+  "files": [
+    "lib/**/*"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoraYama/octo-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoraYama/octo-bot/issues"
+  },
+  "dependencies": {
+    "@octo-bot/core": "^1.0.7",
+    "qq-guild-bot": "^2.9.5"
+  }
+}

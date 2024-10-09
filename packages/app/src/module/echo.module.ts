@@ -1,11 +1,4 @@
-import {
-  BaseModule,
-  Schedule,
-  SendingType,
-  Service,
-  Trigger,
-  TriggerMethod,
-} from '@octo-bot/core';
+import { BaseModule, Service, Trigger, TriggerMethod } from '@octo-bot/core';
 
 import EchoService from '../service/echo.service';
 
@@ -18,7 +11,7 @@ class EchoModule extends BaseModule {
     match: 'test',
     methods: [TriggerMethod.Prefix],
     helpText: 'test bot',
-    platforms: ['telegram'],
+    platforms: ['qq'],
   })
   public async echo() {
     this.bot.logger.info('enter echo');
@@ -26,19 +19,6 @@ class EchoModule extends BaseModule {
     await this.event.reply({
       content: this.echoService.getRemain(),
     });
-  }
-
-  @Schedule('* 0 * * * *')
-  public async schedule() {
-    await this.bot.send(
-      {
-        content: 'cron job',
-      },
-      {
-        type: SendingType.GroupOrChannel,
-        channelOrGroupId: 'YOUR_GROUP_ID',
-      },
-    );
   }
 }
 
