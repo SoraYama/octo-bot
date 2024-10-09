@@ -1,6 +1,6 @@
 {
   "name": "@octo-bot/qq-bot",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "QQ bot module for octo-bot",
   "keywords": [
     "qq",
@@ -32,7 +32,7 @@
     "url": "https://github.com/SoraYama/octo-bot/issues"
   },
   "dependencies": {
-    "@octo-bot/core": "^1.0.7",
+    "@octo-bot/core": "^1.1.0",
     "qq-guild-bot": "^2.9.5"
   }
 }
